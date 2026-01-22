@@ -19,8 +19,17 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Henko",
-  description: "A Next.js project with GSAP and Tailwind CSS",
+  title: "Henko | The Art of Living Better, Longer",
+  description: "Where ancient wisdom meets cutting-edge biohacking. Optimize your path to longevity with our wellness programs.",
+  icons: {
+    icon: [
+      { url: "/images/favicon.svg", type: "image/svg+xml" },
+      { url: "/images/favicon.svg", type: "image/svg+xml", sizes: "any" },
+    ],
+    apple: [
+      { url: "/images/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({

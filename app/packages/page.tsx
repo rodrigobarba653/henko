@@ -157,8 +157,8 @@ export default function PackagesPage() {
                       variant="primary" 
                       className="w-full"
                       onClick={() => {
-                        // Add booking logic here
-                        console.log(`Book ${pkg.name}`);
+                        // TODO: Add booking logic here
+                        // For now, this is a placeholder
                       }}
                     >
                       Book Now
