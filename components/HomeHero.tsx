@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "./ui/Button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -17,10 +18,13 @@ interface HomeHeroProps {
 }
 
 export default function HomeHero({
-  heading = "The Art of Living Better, Longer",
-  subheading = "Where ancient wisdom meets cutting-edge biohacking.",
+  heading,
+  subheading,
   showButtons = true,
 }: HomeHeroProps = {}) {
+  const { t } = useLanguage();
+  const heroHeading = heading || t.hero.heading;
+  const heroSubheading = subheading || t.hero.subheading;
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subheadingRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -41,7 +45,7 @@ export default function HomeHero({
       return;
 
     // Split heading into words and letters
-    const headingText = headingRef.current.textContent || heading;
+    const headingText = headingRef.current.textContent || heroHeading;
     const words = headingText.split(" ");
 
     headingRef.current.innerHTML = words
@@ -282,15 +286,15 @@ export default function HomeHero({
               ref={headingRef}
               className="text-5xl md:text-6xl lg:text-7xl font-semibold text-[#1a1a1a] font-heading mb-6"
             >
-              {heading}
+              {heroHeading}
             </h1>
             <p ref={subheadingRef} className="text-lg text-[#2a2a2a] mb-8">
-              {subheading}
+              {heroSubheading}
             </p>
             {showButtons && (
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-                <Button variant="primary">Book Now</Button>
-                <Button variant="secondary">Meet Us</Button>
+                <Button variant="primary">{t.hero.buttonPrimary}</Button>
+                <Button variant="secondary">{t.hero.buttonSecondary}</Button>
               </div>
             )}
           </div>
@@ -304,7 +308,7 @@ export default function HomeHero({
               <img
                 ref={imageElementRef}
                 src="/images/hero.jpg"
-                alt="Zen yoga and wellness"
+                alt={t.hero.imageAlt}
                 className="w-full h-full object-cover"
               />
               {/* Glass overlay that fades to solid */}

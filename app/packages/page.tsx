@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef } from "react";
-import { packages } from "@/data/packages";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function PackagesPage() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -41,7 +42,7 @@ export default function PackagesPage() {
 
     // Add card animations - scale + fade from bottom, staggered
     const validCardRefs = cardRefs.current
-      .slice(0, packages.length)
+      .slice(0, t.packages.items.length)
       .filter((ref) => ref !== null && ref !== undefined);
     
     if (validCardRefs.length > 0) {
@@ -89,19 +90,19 @@ export default function PackagesPage() {
                 ref={headingRef}
                 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1a1a1a] font-heading mb-4"
               >
-                Packages
+                {t.packages.heading}
               </h1>
               <p 
                 ref={bodyRef}
                 className="text-lg md:text-xl text-[#2a2a2a] leading-relaxed"
               >
-                Choose the perfect package for your wellness journey. Each curated experience is designed to optimize your path to longevity.
+                {t.packages.body}
               </p>
             </div>
 
             {/* Package Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {packages.map((pkg, index) => (
+              {t.packages.items.map((pkg, index) => (
                 <div
                   key={index}
                   ref={(el) => {
@@ -124,7 +125,7 @@ export default function PackagesPage() {
                   {/* Included Services */}
                   <div className="flex-grow mb-6">
                     <h4 className="text-sm font-medium text-[#1a1a1a] uppercase mb-4 font-body tracking-wider">
-                      Included Services
+                      {t.common.buttons.includedServices}
                     </h4>
                     <ul className="space-y-3">
                       {pkg.includedServices.map((service, serviceIndex) => (
@@ -161,7 +162,7 @@ export default function PackagesPage() {
                         // For now, this is a placeholder
                       }}
                     >
-                      Book Now
+                      {t.common.buttons.bookNow}
                     </Button>
                   </div>
                 </div>

@@ -2,8 +2,10 @@
 
 import { useRef } from "react";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AboutUs() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -12,7 +14,7 @@ export default function AboutUs() {
   const setupAnimations = (): AnimationConfig[] => {
     if (!headingRef.current || !bodyRef.current) return [];
 
-    const headingText = headingRef.current.textContent || "Evolution Starts Within.";
+    const headingText = headingRef.current.textContent || t.aboutUs.heading;
     const words = headingText.split(" ");
 
     // Split heading into words, preserving line breaks
@@ -71,17 +73,14 @@ export default function AboutUs() {
               ref={headingRef}
               className="text-4xl md:text-5xl lg:text-5xl font-semibold text-main-beige font-heading"
             >
-              Evolution Starts Within.
+              {t.aboutUs.heading}
             </h2>
           </div>
 
           {/* Right side - 50% - Body text */}
           <div>
             <p ref={bodyRef} className="text-lg text-main-beige leading-relaxed">
-              Welcome to Henko, a sanctuary where ancient wisdom meets
-              cutting-edge biohacking. From high-performance fitness to deep
-              cellular recovery, we provide the tools to master your biology and
-              elevate your spirit.
+              {t.aboutUs.body}
             </p>
           </div>
         </div>

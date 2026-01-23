@@ -2,13 +2,20 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import Button from "./ui/Button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Nav() {
+  const { t, language, setLanguage } = useLanguage();
+  const pathname = usePathname();
+  const router = useRouter();
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pendingScrollTarget = useRef<string | null>(null);
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +27,35 @@ export default function Nav() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle scroll to section when navigating from another page or when page loads with hash
+  useEffect(() => {
+    if (isHomepage && typeof window !== "undefined") {
+      const targetId = pendingScrollTarget.current || window.location.hash.substring(1);
+      
+      if (targetId) {
+        // Wait for the page to fully render and all components to mount
+        const scrollToSection = () => {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const navHeight = 64;
+            const targetPosition = targetElement.offsetTop - navHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            // Clear the pending scroll target after scrolling
+            pendingScrollTarget.current = null;
+          } else {
+            // If element not found yet, try again after a short delay
+            setTimeout(scrollToSection, 50);
+          }
+        };
+        // Initial delay to ensure page is rendered
+        setTimeout(scrollToSection, 300);
+      }
+    }
+  }, [isHomepage, pathname]);
 
   useEffect(() => {
     if (!menuRef.current) return;
@@ -48,11 +84,11 @@ export default function Nav() {
   }, [isMenuOpen]);
 
   const navItems = [
-    { label: "Concept", href: "#concept" },
-    { label: "Services", href: "#experience" },
-    { label: "Fuel & Shop", href: "#fuel-shop" },
-    { label: "Pilars", href: "#pilars" },
-    { label: "Packages", href: "/packages" },
+    { label: t.common.nav.concept, href: "#concept" },
+    { label: t.common.nav.services, href: "#experience" },
+    { label: t.common.nav.fuelShop, href: "#fuel-shop" },
+    { label: t.common.nav.pilars, href: "#pilars" },
+    { label: t.common.nav.packages, href: "/packages" },
   ];
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -61,54 +97,23 @@ export default function Nav() {
     if (href.startsWith("#")) {
       e.preventDefault();
       const targetId = href.substring(1);
-      const targetElement = document.getElementById(targetId);
       
-      if (targetElement) {
-        const navHeight = 64; // Height of fixed nav
-        const targetPosition = targetElement.offsetTop - navHeight;
-        const currentScrollY = window.scrollY;
-        
-        // If not at the top (not in hero), scroll to hero first, then to target
-        if (currentScrollY > 100) {
-          // First, scroll to top (hero section)
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-          
-          // Wait for scroll to top to complete, then scroll to target
-          const scrollToTop = () => {
-            const checkScroll = setInterval(() => {
-              if (window.scrollY <= 10) {
-                clearInterval(checkScroll);
-                // Small delay to ensure we're at top, then scroll to target
-                setTimeout(() => {
-                  window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                  });
-                }, 100);
-              }
-            }, 50);
-            
-            // Fallback timeout in case scroll detection doesn't work
-            setTimeout(() => {
-              clearInterval(checkScroll);
-              window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-              });
-            }, 1000);
-          };
-          
-          scrollToTop();
-        } else {
-          // Already at top, just scroll to target
+      // If we're on the homepage, scroll directly to the section
+      if (isHomepage) {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          const navHeight = 64; // Height of fixed nav
+          const targetPosition = targetElement.offsetTop - navHeight;
           window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'
           });
         }
+      } else {
+        // If we're on another page, store the target and navigate to homepage
+        // The useEffect will handle scrolling after navigation completes
+        pendingScrollTarget.current = targetId;
+        router.push("/");
       }
     }
     // For regular page links (like /packages), let the browser handle navigation normally
@@ -137,7 +142,7 @@ export default function Nav() {
                 >
                   <img 
                     src="/images/logo.svg" 
-                    alt="Henko Logo" 
+                    alt={t.navSection.logoAlt}
                     className={`h-8 md:h-12 w-auto transition-all duration-300 ${
                       !isAtTop ? "md:h-8 h-8" : ""
                     }`}
@@ -158,16 +163,25 @@ export default function Nav() {
               </div>
             </div>
 
-            {/* Desktop Booking Button */}
-            <div className="hidden md:block flex-shrink-0">
-              <Button variant="primary">Booking</Button>
+            {/* Desktop Actions */}
+            <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
+              {/* Language Toggle */}
+              <button
+                onClick={() => setLanguage(language === "en" ? "es" : "en")}
+                className="px-4 py-2 rounded-full border-2 border-main-green text-main-green hover:bg-main-green hover:text-main-beige transition-colors font-medium text-sm"
+                aria-label={language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+              >
+                {language === "en" ? t.navSection.languageSpanish : t.navSection.languageEnglish}
+              </button>
+              {/* Booking Button */}
+              <Button variant="primary">{t.common.nav.booking}</Button>
             </div>
 
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
-              aria-label="Toggle menu"
+              aria-label={t.navSection.menuToggle}
             >
               <span
                 className={`block w-6 h-0.5 bg-main-green transition-all ${
@@ -200,7 +214,7 @@ export default function Nav() {
           <button
             onClick={() => setIsMenuOpen(false)}
             className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-main-beige"
-            aria-label="Close menu"
+            aria-label={t.navSection.menuClose}
           >
             <svg
               className="w-8 h-8"
@@ -231,14 +245,25 @@ export default function Nav() {
             ))}
           </nav>
 
+          {/* Language Toggle */}
+          <div className="mt-8">
+            <button
+              onClick={() => setLanguage(language === "en" ? "es" : "en")}
+              className="px-6 py-3 rounded-full border-2 border-main-beige text-main-beige hover:bg-main-beige hover:text-oxide transition-colors font-medium text-lg"
+              aria-label={language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+            >
+              {language === "en" ? t.navSection.languageSpanish : t.navSection.languageEnglish}
+            </button>
+          </div>
+
           {/* Booking Button */}
-          <div className="mt-12">
+          <div className="mt-8">
             <Button
               variant="secondary"
               onClick={handleLinkClick}
               className="px-8 py-4 text-xl"
             >
-              Booking
+              {t.common.nav.booking}
             </Button>
           </div>
         </div>

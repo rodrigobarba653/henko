@@ -18,6 +18,11 @@
   }
 }
 
+html, body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

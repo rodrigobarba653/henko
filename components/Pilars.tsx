@@ -2,8 +2,10 @@
 
 import { useState, useRef } from "react";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Pilars() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -12,57 +14,11 @@ export default function Pilars() {
   const iconRefs = useRef<(HTMLImageElement | null)[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First item open by default
 
-  const pilars = [
-    {
-      heading: "Cellular Vitality (Science)",
-      subheading: "The Hyperbaric Chamber & Supplements.",
-      body: "Real wellness starts at the cellular level. We provide the oxygen, nutrients, and environment needed to repair and rejuvenate your body from the inside out.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-1.svg",
-    },
-    {
-      heading: "The Contrast Method (Recovery)",
-      subheading: "Sauna & Cold Plunge.",
-      body: "Growth happens at the edges. By mastering heat and cold, you build a resilient nervous system designed to handle modern stress with ease.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-2.svg",
-    },
-    {
-      heading: "Intuitive Motion (Body)",
-      subheading: "Yoga, Pilates, and Functional.",
-      body: "We don't believe in punishing the body. We focus on intelligent movement, biomechanics, and alignment to build strength without breaking you down.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-3.svg",
-    },
-    {
-      heading: "Neuro-Architecture (Mind)",
-      subheading: "Meditation & Breathwork.",
-      body: "Designing a better brain. Through meditation and breathing protocols, we help rewire your response to stress, enhancing focus, creativity, and emotional balance.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-4.svg",
-    },
-    {
-      heading: "Aesthetic Alchemy (Beauty)",
-      subheading: "Spa, Face Yoga & Retail.",
-      body: "The Concept: Beauty is the reflection of internal health. Our spa and retail rituals nourish both skin and soul.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-5.svg",
-    },
-    {
-      heading: "The Longevity Legacy (Community)",
-      subheading: "Long-term results & The Club Culture.",
-      body: "We're not a fitness phase—we're a life partner. A sanctuary for high achievers committed to living better, longer.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-6.svg",
-    },
-    {
-      heading: "Elemental Nutrition (The Fuel)",
-      subheading: "Bio-available nourishment as a ritual.",
-      body: "Everything at the Fuel Bar and Henko Edit is chosen for purity—alchemy in a glass designed to support performance and recovery.",
-      image: "/images/pilars.jpg",
-      icon: "/images/pilars-7.svg",
-    },
-  ];
+  const pilars = t.pilars.items.map((item, index) => ({
+    ...item,
+    image: "/images/pilars.jpg",
+    icon: `/images/pilars-${index + 1}.svg`,
+  }));
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -136,31 +92,6 @@ export default function Pilars() {
       });
     }
 
-    // Add icon animations - scale + rotate
-    const validIconRefs = iconRefs.current
-      .slice(0, pilars.length)
-      .filter((ref) => ref !== null && ref !== undefined);
-    
-    if (validIconRefs.length > 0) {
-      validIconRefs.forEach((iconRef, index) => {
-        animations.push({
-          element: iconRef,
-          from: { 
-            opacity: 0,
-            scale: 0,
-            rotation: -90,
-          },
-          to: {
-            opacity: 1,
-            scale: 1,
-            rotation: 0,
-            duration: 0.6,
-          },
-          position: index === 0 ? "-=0.7" : "-=0.5", // Start with accordion item
-        });
-      });
-    }
-
     return animations;
   };
 
@@ -181,10 +112,10 @@ export default function Pilars() {
         {/* Heading and Body */}
         <div className="md:max-w-[50%] mx-auto md:text-center mb-12">
           <h2 ref={headingRef} className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4">
-            Pilars
+            {t.pilars.heading}
           </h2>
           <p ref={bodyRef} className="text-lg text-[#1a1a1a] leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {t.pilars.body}
           </p>
         </div>
 
@@ -193,12 +124,12 @@ export default function Pilars() {
           {/* Left side - Image */}
           <div className="lg:sticky lg:top-24">
             <div ref={imageWrapperRef} className="relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden">
-              <img
-                key={openIndex}
-                src={activeImage}
-                alt={`Pilar ${openIndex !== null ? openIndex + 1 : 1}`}
-                className="w-full h-full object-cover transition-opacity duration-500"
-              />
+                <img
+                  key={openIndex}
+                  src={activeImage}
+                  alt={t.pilars.imageAlt}
+                  className="w-full h-full object-cover transition-opacity duration-500"
+                />
             </div>
           </div>
 
@@ -227,7 +158,7 @@ export default function Pilars() {
                           iconRefs.current[index] = el;
                         }}
                         src={pilar.icon}
-                        alt={pilar.heading}
+                        alt={pilar.iconAlt}
                         className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0"
                       />
 

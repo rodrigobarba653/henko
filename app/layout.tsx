@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Gowun_Batang, Montserrat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { translations } from "@/data/i18n";
 // import SmoothScroll from "@/components/SmoothScroll";
 
 const gowunBatang = Gowun_Batang({
@@ -18,9 +20,11 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+// Metadata uses English as default (static at build time)
+// For dynamic metadata based on language, consider using next-intl or similar
 export const metadata: Metadata = {
-  title: "Henko | The Art of Living Better, Longer",
-  description: "Where ancient wisdom meets cutting-edge biohacking. Optimize your path to longevity with our wellness programs.",
+  title: translations.en.metadata.title,
+  description: translations.en.metadata.description,
   icons: {
     icon: [
       { url: "/images/favicon.svg", type: "image/svg+xml" },
@@ -40,9 +44,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${gowunBatang.variable} ${montserrat.variable}`}>
       <body className={`${montserrat.className} bg-bg-beige`}>
-        {/* <SmoothScroll /> */}
-        <Nav />
-        {children}
+        <LanguageProvider>
+          {/* <SmoothScroll /> */}
+          <Nav />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

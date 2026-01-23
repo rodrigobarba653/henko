@@ -15,7 +15,7 @@ export default function ServiceHero({
     <section className="relative w-full py-8 md:py-12 mt-12">
       <div className="max-w-7xl mx-auto px-4">
         <div
-          className="relative w-full h-[60vh] md:h-[70vh] min-h-[500px] rounded-[2rem] overflow-hidden bg-cover bg-center bg-no-repeat"
+          className="relative w-full h-[40vh] lg:h-[70vh] md:min-h-[500px] rounded-[2rem] overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${imageUrl})`,
           }}

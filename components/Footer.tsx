@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="bg-main-green text-main-beige py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +14,7 @@ export default function Footer() {
             {/* Contact Heading */}
             <div className="mb-12">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-main-beige font-heading">
-                Contact
+                {t.footer.contact}
               </h2>
             </div>
 
@@ -21,16 +23,16 @@ export default function Footer() {
             {/* First part - Address */}
             <div>
               <h3 className="text-sm md:text-base font-medium text-main-beige uppercase mb-4 font-body tracking-wider">
-                Address
+                {t.footer.address}
               </h3>
               <p className="text-lg text-main-beige leading-relaxed font-heading">
-                Oaxaca #96 int. 103
+                {t.footer.addressLine1}
                 <br />
-                Col. Roma Norte
+                {t.footer.addressLine2}
                 <br />
-                CDMX
+                {t.footer.addressLine3}
                 <br />
-                C.P. 06700
+                {t.footer.addressLine4}
               </p>
             </div>
 
@@ -56,7 +58,7 @@ export default function Footer() {
                     href="tel:+525571587284"
                     className="text-lg text-main-beige hover:opacity-80 transition-opacity font-body"
                   >
-                    01 (55) 71587284
+                    {t.footer.phone}
                   </Link>
                 </div>
 
@@ -81,7 +83,7 @@ export default function Footer() {
                     href="mailto:info@henko.mx"
                     className="text-lg text-main-beige hover:opacity-80 transition-opacity font-body"
                   >
-                    info@henko.mx
+                    {t.footer.email}
                   </Link>
                 </div>
 
@@ -93,7 +95,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-main-beige/20 rounded-lg flex items-center justify-center hover:bg-main-beige/30 transition-colors"
-                    aria-label="Instagram"
+                    aria-label={t.footer.instagram}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +121,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-main-beige/20 rounded-lg flex items-center justify-center hover:bg-main-beige/30 transition-colors"
-                    aria-label="Facebook"
+                    aria-label={t.footer.facebook}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +147,7 @@ export default function Footer() {
           <div className="lg:flex lg:items-center lg:justify-end flex-shrink-0">
             <img 
               src="/images/logo-beige.svg" 
-              alt="Henko Logo" 
+              alt={t.footer.logoAlt}
               className="h-24 md:h-24 lg:h-32 w-auto"
             />
           </div>

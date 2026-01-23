@@ -2,8 +2,10 @@
 
 import { useRef } from "react";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Concept() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -66,7 +68,7 @@ export default function Concept() {
             <div ref={imageWrapperRef} className="relative w-full h-[400px] rounded-[2rem] overflow-hidden">
               <img
                 src="/images/concept.jpg"
-                alt="Concept"
+                alt={t.conceptSection.imageAlt}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -75,13 +77,10 @@ export default function Concept() {
           {/* Right side - 20% - Text content */}
           <div className="lg:col-span-3 order-1 lg:order-2">
             <h2 ref={headingRef} className="text-3xl md:text-4xl font-semibold text-[#1a1a1a] font-heading mb-4">
-              The Concept
+              {t.conceptSection.heading}
             </h2>
             <p ref={bodyRef} className="text-lg text-[#1a1a1a] leading-relaxed">
-              At Henko, we don't just treat symptoms; we optimize human
-              potential. Whether you seek peak physical performance, mental
-              clarity, or a moment of profound stillness, your journey to
-              longevity begins here.
+              {t.conceptSection.body}
             </p>
           </div>
         </div>

@@ -2,8 +2,10 @@
 
 import { useRef } from "react";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Retail() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -11,15 +13,17 @@ export default function Retail() {
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cards = [
     {
-      heading: "Elements (Shop)",
-      subheading: "Curated Longevity",
-      body: "Take the Henko experience home. From physician-grade supplements to clean-beauty skincare, every product in our retail shop is vetted for purity and efficacy.",
+      heading: t.retail.cards.shop.heading,
+      subheading: t.retail.cards.shop.subheading,
+      body: t.retail.cards.shop.body,
+      alt: t.retail.cards.shop.alt,
       icon: "/images/retail-1.svg",
     },
     {
-      heading: "Fuel Bar",
-      subheading: "Alchemy in a Glass",
-      body: "Nourish your recovery at our Juice & Frappé Bar. We blend organic, nutrient-dense ingredients with biohacking boosters like collagen, adaptogens, and clean protein to fuel your transformation.",
+      heading: t.retail.cards.fuelBar.heading,
+      subheading: t.retail.cards.fuelBar.subheading,
+      body: t.retail.cards.fuelBar.body,
+      alt: t.retail.cards.fuelBar.alt,
       icon: "/images/retail-2.svg",
     },
   ];
@@ -108,7 +112,7 @@ export default function Retail() {
     {
       trigger: sectionRef,
       start: "top 50%", // Start animation later (when section is more in view)
-      end: "top 0%", // End when section is near top of viewport
+      end: "top 10%", // End when section is near top of viewport
       scrub: 0.3, // Small deceleration
     },
     setupAnimations
@@ -120,10 +124,10 @@ export default function Retail() {
         {/* Heading and Body */}
         <div className="md:max-w-[50%] mx-auto md:text-center mb-12">
           <h2 ref={headingRef} className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4">
-            Retail & Fuel Bar
+            {t.retail.heading}
           </h2>
           <p ref={bodyRef} className="text-lg text-[#1a1a1a] leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {t.retail.body}
           </p>
         </div>
 
@@ -146,7 +150,7 @@ export default function Retail() {
               >
                 <img
                   src={card.icon}
-                  alt={card.heading}
+                  alt={card.alt}
                   className="w-11 h-11 md:w-12 md:h-12 object-contain"
                 />
               </div>

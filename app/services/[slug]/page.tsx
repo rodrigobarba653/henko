@@ -1,13 +1,15 @@
-import ServiceHero from "@/components/ServiceHero";
 import Footer from "@/components/Footer";
-import ServiceDetail from "@/components/ServiceDetail";
-import { services } from "@/data/services";
+import { servicesTranslations } from "@/data/services-i18n";
 import { notFound } from "next/navigation";
+import ServicePageClient from "./ServicePageClient";
 
 export function generateStaticParams() {
-  return services.map((service) => ({
-    slug: service.slug,
-  }));
+  // Return slugs for static generation (language-agnostic)
+  return [
+    { slug: "biohacking" },
+    { slug: "fitness" },
+    { slug: "spa-beauty" },
+  ];
 }
 
 export default function ServicePage({
@@ -15,6 +17,8 @@ export default function ServicePage({
 }: {
   params: { slug: string };
 }) {
+  // Use English as default for static generation, client will handle language switching
+  const services = servicesTranslations.en;
   const service = services.find((s) => s.slug === params.slug);
 
   if (!service) {
@@ -24,19 +28,7 @@ export default function ServicePage({
   return (
     <>
       <main className="bg-bg-beige">
-        <ServiceHero
-          heading={service.heading}
-          subheading={service.subheading}
-          imageUrl={service.imageUrl}
-        />
-        <ServiceDetail
-          service={{
-            headline: service.headline,
-            description: service.description,
-            sectionTitle: service.sectionTitle,
-            items: service.items,
-          }}
-        />
+        <ServicePageClient slug={params.slug} />
       </main>
       <Footer />
     </>
