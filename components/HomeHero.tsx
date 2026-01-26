@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useBookingModal } from "@/contexts/BookingModalContext";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -23,6 +24,7 @@ export default function HomeHero({
   showButtons = true,
 }: HomeHeroProps = {}) {
   const { t } = useLanguage();
+  const { openModal } = useBookingModal();
   const heroHeading = heading || t.hero.heading;
   const heroSubheading = subheading || t.hero.subheading;
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -293,7 +295,7 @@ export default function HomeHero({
             </p>
             {showButtons && (
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-                <Button variant="primary">{t.hero.buttonPrimary}</Button>
+                <Button variant="primary" onClick={openModal}>{t.hero.buttonPrimary}</Button>
                 <Button variant="secondary">{t.hero.buttonSecondary}</Button>
               </div>
             )}

@@ -15,6 +15,14 @@ export interface Service {
       label: string;
       icon?: string;
     }>;
+    personalization?: {
+      heading: string;
+      description: string;
+      bulletPoints: Array<{
+        label: string;
+        icon: string;
+      }>;
+    };
   }>;
 }
 
@@ -103,13 +111,17 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Recovery & Decompression Massage",
           description:
             "Targeted deep-tissue work to release myofascial restrictions and sports-related tension.",
-          bulletPoints: [
-            { label: "Music Therapy" },
-            { label: "Aromatherapy" },
-            { label: "Massage Pressure" },
-            { label: "Oil or Cream" },
-            { label: "Tea Selection" },
-          ],
+          personalization: {
+            heading: "Personalize Your Experience",
+            description: "Select your preferences to personalize your massage experience.",
+            bulletPoints: [
+              { label: "Music Therapy", icon: "mdi:music" },
+              { label: "Aromatherapy", icon: "mdi:flower" },
+              { label: "Massage Pressure", icon: "mdi:hand-back-left" },
+              { label: "Oil or Cream", icon: "mdi:water" },
+              { label: "Tea Selection", icon: "mdi:cup" },
+            ],
+          },
         },
         {
           title: "Relaxation Ritual",
@@ -208,13 +220,17 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Masaje de Recuperación y Descompresión",
           description:
             "Trabajo de tejido profundo dirigido para liberar restricciones miofasciales y tensión relacionada con deportes.",
-          bulletPoints: [
-            { label: "Musicoterapia" },
-            { label: "Aromaterapia" },
-            { label: "Presión del Masaje" },
-            { label: "Aceite o Crema" },
-            { label: "Selección de Té" },
-          ],
+          personalization: {
+            heading: "Personaliza Tu Experiencia",
+            description: "Selecciona tus preferencias para personalizar tu experiencia de masaje.",
+            bulletPoints: [
+              { label: "Musicoterapia", icon: "mdi:music" },
+              { label: "Aromaterapia", icon: "mdi:flower" },
+              { label: "Presión del Masaje", icon: "mdi:hand-back-left" },
+              { label: "Aceite o Crema", icon: "mdi:water" },
+              { label: "Selección de Té", icon: "mdi:cup" },
+            ],
+          },
         },
         {
           title: "Ritual de Relajación",

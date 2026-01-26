@@ -30,6 +30,7 @@ export default function ServicePageClient({ slug }: ServicePageClientProps) {
           sectionTitle: service.sectionTitle,
           items: service.items,
         }}
+        slug={service.slug}
       />
     </>
   );

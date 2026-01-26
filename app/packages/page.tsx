@@ -6,9 +6,11 @@ import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useBookingModal } from "@/contexts/BookingModalContext";
 
 export default function PackagesPage() {
   const { t } = useLanguage();
+  const { openModal } = useBookingModal();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -157,10 +159,7 @@ export default function PackagesPage() {
                     <Button 
                       variant="primary" 
                       className="w-full"
-                      onClick={() => {
-                        // TODO: Add booking logic here
-                        // For now, this is a placeholder
-                      }}
+                      onClick={openModal}
                     >
                       {t.common.buttons.bookNow}
                     </Button>

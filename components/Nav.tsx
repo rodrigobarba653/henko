@@ -6,9 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useBookingModal } from "@/contexts/BookingModalContext";
 
 export default function Nav() {
   const { t, language, setLanguage } = useLanguage();
+  const { openModal } = useBookingModal();
   const pathname = usePathname();
   const router = useRouter();
   const [isAtTop, setIsAtTop] = useState(true);
@@ -174,7 +176,7 @@ export default function Nav() {
                 {language === "en" ? t.navSection.languageSpanish : t.navSection.languageEnglish}
               </button>
               {/* Booking Button */}
-              <Button variant="primary">{t.common.nav.booking}</Button>
+              <Button variant="primary" onClick={openModal}>{t.common.nav.booking}</Button>
             </div>
 
             {/* Mobile Hamburger Button */}
@@ -260,7 +262,10 @@ export default function Nav() {
           <div className="mt-8">
             <Button
               variant="secondary"
-              onClick={handleLinkClick}
+              onClick={() => {
+                setIsMenuOpen(false);
+                openModal();
+              }}
               className="px-8 py-4 text-xl"
             >
               {t.common.nav.booking}

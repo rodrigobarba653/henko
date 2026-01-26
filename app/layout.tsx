@@ -3,6 +3,8 @@ import { Gowun_Batang, Montserrat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { BookingModalProvider } from "@/contexts/BookingModalContext";
+import BookingModal from "@/components/BookingModal";
 import { translations } from "@/data/i18n";
 // import SmoothScroll from "@/components/SmoothScroll";
 
@@ -45,9 +47,12 @@ export default function RootLayout({
     <html lang="en" className={`${gowunBatang.variable} ${montserrat.variable}`}>
       <body className={`${montserrat.className} bg-bg-beige`}>
         <LanguageProvider>
-          {/* <SmoothScroll /> */}
-          <Nav />
-          {children}
+          <BookingModalProvider>
+            {/* <SmoothScroll /> */}
+            <Nav />
+            {children}
+            <BookingModal />
+          </BookingModalProvider>
         </LanguageProvider>
       </body>
     </html>
