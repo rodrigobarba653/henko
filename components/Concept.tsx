@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -13,7 +14,9 @@ export default function Concept() {
 
   // Setup function that prepares animations
   const setupAnimations = (): AnimationConfig[] => {
-    if (!imageWrapperRef.current || !headingRef.current || !bodyRef.current) return [];
+    // TODO: Re-enable bodyRef check when body animation is needed
+    // if (!imageWrapperRef.current || !headingRef.current || !bodyRef.current) return [];
+    if (!imageWrapperRef.current || !headingRef.current) return [];
 
     return [
       {
@@ -35,18 +38,29 @@ export default function Concept() {
         },
         position: "+=0.2", // Start 0.2s after previous animation ends
       },
-      {
-        element: bodyRef.current,
-        from: { opacity: 0, x: 50 },
-        to: {
-          opacity: 1,
-          x: 0,
-          duration: 0.6, // Scroll distance needed: higher = slower animation
-        },
-        position: "-=0.3", // Start 0.3s before previous animation ends (overlap)
-      },
+      // TODO: Re-enable body text animation when needed
+      // {
+      //   element: bodyRef.current,
+      //   from: { opacity: 0, x: 50 },
+      //   to: {
+      //     opacity: 1,
+      //     x: 0,
+      //     duration: 0.6, // Scroll distance needed: higher = slower animation
+      //   },
+      //   position: "-=0.3", // Start 0.3s before previous animation ends (overlap)
+      // },
     ];
   };
+
+  // Set body text to final visible state (bypassed animation)
+  useEffect(() => {
+    if (bodyRef.current) {
+      gsap.set(bodyRef.current, {
+        opacity: 1,
+        x: 0,
+      });
+    }
+  }, []);
 
   // Use the reusable hook
   useScrollTrigger(

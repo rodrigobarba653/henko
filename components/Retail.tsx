@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -30,7 +31,9 @@ export default function Retail() {
 
   // Setup function that prepares ScrollTrigger animations
   const setupAnimations = (): AnimationConfig[] => {
-    if (!headingRef.current || !bodyRef.current) return [];
+    // TODO: Re-enable bodyRef check when body animation is needed
+    // if (!headingRef.current || !bodyRef.current) return [];
+    if (!headingRef.current) return [];
 
     const animations: AnimationConfig[] = [
       {
@@ -42,16 +45,17 @@ export default function Retail() {
           duration: 0.8,
         },
       },
-      {
-        element: bodyRef.current,
-        from: { opacity: 0, y: 20 },
-        to: {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-        },
-        position: "-=0.4",
-      },
+      // TODO: Re-enable body text animation when needed
+      // {
+      //   element: bodyRef.current,
+      //   from: { opacity: 0, y: 20 },
+      //   to: {
+      //     opacity: 1,
+      //     y: 0,
+      //     duration: 0.8,
+      //   },
+      //   position: "-=0.4",
+      // },
     ];
 
     // Add card animations - scale + fade from bottom
@@ -106,6 +110,16 @@ export default function Retail() {
 
     return animations;
   };
+
+  // Set body text to final visible state (bypassed animation)
+  useEffect(() => {
+    if (bodyRef.current) {
+      gsap.set(bodyRef.current, {
+        opacity: 1,
+        y: 0,
+      });
+    }
+  }, []);
 
   // Use the reusable hook
   useScrollTrigger(

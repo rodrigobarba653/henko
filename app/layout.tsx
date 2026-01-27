@@ -5,8 +5,8 @@ import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { BookingModalProvider } from "@/contexts/BookingModalContext";
 import BookingModal from "@/components/BookingModal";
+import ScrollSmootherSetup from "@/components/ScrollSmootherSetup";
 import { translations } from "@/data/i18n";
-// import SmoothScroll from "@/components/SmoothScroll";
 
 const gowunBatang = Gowun_Batang({
   weight: ["400", "700"],
@@ -48,10 +48,17 @@ export default function RootLayout({
       <body className={`${montserrat.className} bg-bg-beige`}>
         <LanguageProvider>
           <BookingModalProvider>
-            {/* <SmoothScroll /> */}
+            {/* Fixed elements outside smooth-wrapper */}
             <Nav />
-            {children}
             <BookingModal />
+            
+            {/* ScrollSmoother wrapper and content */}
+            <div id="smooth-wrapper">
+              <div id="smooth-content">
+                <ScrollSmootherSetup />
+                {children}
+              </div>
+            </div>
           </BookingModalProvider>
         </LanguageProvider>
       </body>
