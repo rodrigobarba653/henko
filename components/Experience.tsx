@@ -37,56 +37,6 @@ export default function Experience() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Initialize card states on desktop
-  useEffect(() => {
-    if (!isMobile && isMounted) {
-      cardRefs.current.forEach((cardRef, index) => {
-        if (cardRef) {
-          const paragraphs = cardRef.querySelectorAll('p');
-          const subheadingElement = paragraphs[0] as HTMLElement;
-          const bodyElement = paragraphs[paragraphs.length - 1] as HTMLElement;
-          
-          if (index === activeIndex) {
-            // First card (active) - show content
-            if (subheadingElement) {
-              gsap.set(subheadingElement, { 
-                opacity: 1, 
-                y: 0, 
-                height: "auto",
-                marginBottom: "0.75rem"
-              });
-            }
-            if (bodyElement) {
-              gsap.set(bodyElement, { 
-                opacity: 1, 
-                y: 0, 
-                height: "auto"
-              });
-            }
-            gsap.set(cardRef, { padding: "2.5rem" });
-          } else {
-            // Other cards (inactive) - hide content
-            if (subheadingElement) {
-              gsap.set(subheadingElement, { 
-                opacity: 0, 
-                y: -10, 
-                height: 0,
-                marginBottom: 0
-              });
-            }
-            if (bodyElement) {
-              gsap.set(bodyElement, { 
-                opacity: 0, 
-                y: -10, 
-                height: 0
-              });
-            }
-            gsap.set(cardRef, { padding: "1.5rem" });
-          }
-        }
-      });
-    }
-  }, [isMobile, isMounted, activeIndex]);
 
   // Setup function that prepares ScrollTrigger animations
   const setupAnimations = (): AnimationConfig[] => {
@@ -99,7 +49,7 @@ export default function Experience() {
         to: {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.4,
         },
       },
       {
@@ -114,8 +64,7 @@ export default function Experience() {
       },
     ];
 
-    // Add card animations (blur glass fade-in) - staggered
-    // Check if refs are available (they should be after render)
+    // Add card intro animations - fade in and slide up from bottom, staggered
     const validCardRefs = cardWrapperRefs.current
       .slice(0, images.length)
       .filter((ref) => ref !== null && ref !== undefined);
@@ -126,16 +75,16 @@ export default function Experience() {
           element: cardRef,
           from: { 
             opacity: 0,
-            filter: "blur(20px)",
-            backdropFilter: "blur(0px)",
+            y: 50,
+            scale: 0.95,
           },
           to: {
             opacity: 1,
-            filter: "blur(0px)",
-            backdropFilter: "blur(10px)",
-            duration: 0.2,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
           },
-          position: index === 0 ? "-=0.3" : "+=0.3", // Staggered spacing
+          position: index === 0 ? "-=0.2" : "+=0.2", // Staggered spacing
         });
       });
     }
@@ -147,8 +96,8 @@ export default function Experience() {
   useScrollTrigger(
     {
       trigger: sectionRef,
-      start: "top 50%", // Start animation later (when section is more in view)
-      end: "top 10%", // End when section is near top of viewport
+      start: "top 40%", // Start animation later (when section is more in view)
+      end: "top 20%", // End when section is near top of viewport
       scrub: 0.3, // Small deceleration - animation follows scroll with slight lag (stops when scroll stops)
     },
     setupAnimations
@@ -187,105 +136,8 @@ export default function Experience() {
     },
   ];
 
-  useEffect(() => {
-    // Check viewport width directly to ensure accurate mobile detection
-    const checkViewport = typeof window !== "undefined" && window.innerWidth < 1024;
 
-    // Only animate on desktop
-    if (!checkViewport) {
-      imageRefs.current.forEach((ref, index) => {
-        if (ref) {
-          gsap.to(ref, {
-            width: activeIndex === index ? "50%" : "25%",
-            duration: 0.5,
-            ease: "power2.inOut",
-          });
-        }
-      });
-
-      // Animate body text in/out for each card and adjust oxide box height
-      cardRefs.current.forEach((cardRef, index) => {
-        if (cardRef) {
-          // Find subheading (first p) and body (last p)
-          const paragraphs = cardRef.querySelectorAll('p');
-          const subheadingElement = paragraphs[0] as HTMLElement;
-          const bodyElement = paragraphs[paragraphs.length - 1] as HTMLElement;
-          
-          if (activeIndex === index) {
-            // Animate body and subheading in, expand oxide box
-            if (subheadingElement) {
-              gsap.to(subheadingElement, {
-                opacity: 1,
-                y: 0,
-                height: "auto",
-                marginBottom: "0.75rem",
-                duration: 0.4,
-                delay: 0.1,
-                ease: "power2.out",
-              });
-            }
-            if (bodyElement) {
-              gsap.to(bodyElement, {
-                opacity: 1,
-                y: 0,
-                height: "auto",
-                duration: 0.4,
-                delay: 0.2,
-                ease: "power2.out",
-              });
-            }
-            // Expand oxide box padding
-            gsap.to(cardRef, {
-              padding: "2.5rem",
-              duration: 0.4,
-              ease: "power2.out",
-            });
-          } else {
-            // Animate body and subheading out, shrink oxide box
-            if (subheadingElement) {
-              gsap.to(subheadingElement, {
-                opacity: 0,
-                y: -10,
-                height: 0,
-                marginBottom: 0,
-                duration: 0.3,
-                ease: "power2.in",
-              });
-            }
-            if (bodyElement) {
-              gsap.to(bodyElement, {
-                opacity: 0,
-                y: -10,
-                height: 0,
-                duration: 0.3,
-                ease: "power2.in",
-              });
-            }
-            // Shrink oxide box padding
-            gsap.to(cardRef, {
-              padding: "1.5rem",
-              duration: 0.3,
-              ease: "power2.in",
-            });
-          }
-        }
-      });
-    } else {
-      // On mobile, ensure all cards are 100% width and clear any GSAP transforms
-      imageRefs.current.forEach((ref) => {
-        if (ref) {
-          gsap.set(ref, { width: "100%", clearProps: "width" });
-          ref.style.width = "100%";
-          ref.style.maxWidth = "100%";
-          // Clear any inline width styles that GSAP might have added
-          ref.style.removeProperty("width");
-          ref.style.width = "100%";
-        }
-      });
-    }
-  }, [activeIndex, isMobile]);
-
-  const handleImageClick = (index: number) => {
+  const handleImageHover = (index: number) => {
     if (index !== activeIndex) {
       setActiveIndex(index);
     }
@@ -312,11 +164,14 @@ export default function Experience() {
           {images.map((image, index) => (
             <div
               key={index}
-              onClick={() => {
+              onMouseEnter={() => {
                 if (!isMobile && activeIndex !== index) {
-                  handleImageClick(index);
-                } else if (image.href) {
-                  // Navigate to service page
+                  handleImageHover(index);
+                }
+              }}
+              onClick={() => {
+                if (isMobile && image.href) {
+                  // On mobile, navigate to service page on click
                   router.push(image.href);
                 }
               }}
@@ -324,22 +179,11 @@ export default function Experience() {
                 // Set both refs
                 cardWrapperRefs.current[index] = el;
                 imageRefs.current[index] = el;
-                
-                // Force 100% width on mobile immediately (only on client)
-                if (el && isMounted) {
-                  const isMobileWidth = window.innerWidth < 1024;
-                  if (isMobileWidth) {
-                    gsap.set(el, { width: "100%", clearProps: "width" });
-                    el.style.width = "100%";
-                  }
-                }
               }}
               className={`${
                 isMobile
                   ? "h-[400px] w-full cursor-pointer"
-                  : `cursor-pointer transition-all relative ${
-                      activeIndex === index ? "flex-[2]" : "flex-1"
-                    }`
+                  : "cursor-pointer relative transition-all duration-[400ms] ease-in-out"
               } flex flex-col rounded-[2rem] overflow-hidden relative`}
               style={
                 !isMobile
@@ -355,7 +199,7 @@ export default function Experience() {
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
-                      width: "100% !important",
+                      width: "100%",
                     }
               }
             >
@@ -365,7 +209,7 @@ export default function Experience() {
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className={`absolute bottom-0 left-0 right-0 bg-oxide/70 backdrop-blur-md text-main-beige rounded-[2rem] border border-main-beige/20 shadow-lg transition-all overflow-hidden ${
+                className={`absolute bottom-0 left-0 right-0 bg-oxide/70 backdrop-blur-md text-main-beige rounded-[2rem] border border-main-beige/20 shadow-lg transition-all overflow-hidden max-h-[266px] ${
                   isMobile
                     ? "p-6 mx-4 mb-4"
                     : activeIndex === index
@@ -414,15 +258,25 @@ export default function Experience() {
                   {image.card.heading}
                 </h3>
 
-                {/* Subheading and Body - Always rendered but animated in/out based on activeIndex */}
+                {/* Subheading and Body - Always rendered, visibility controlled by CSS */}
                 {!isMobile && (
-                  <p className="text-sm md:text-sm font-medium text-main-beige uppercase mb-3 font-body tracking-wider opacity-0">
+                  <p 
+                    className={`text-sm md:text-sm font-medium text-main-beige uppercase mb-3 font-body tracking-wider transition-all duration-300 ${
+                      activeIndex === index 
+                        ? "opacity-100 h-auto mb-3 delay-[400ms]" 
+                        : "opacity-0 h-0 mb-0 overflow-hidden"
+                    }`}
+                  >
                     {image.card.subheading}
                   </p>
                 )}
-                <p className={`text-base md:text-lg text-main-beige leading-relaxed font-body ${
-                  !isMobile ? "opacity-0" : ""
-                }`}>
+                <p 
+                  className={`text-base md:text-lg text-main-beige leading-relaxed font-body transition-all duration-500 ${
+                    (!isMobile && activeIndex === index) || isMobile 
+                      ? "opacity-100 h-auto delay-[500ms]" 
+                      : "opacity-0 h-0 overflow-hidden"
+                  }`}
+                >
                   {image.card.body}
                 </p>
               </div>
