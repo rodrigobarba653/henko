@@ -1,16 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useEffect } from "react";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useBookingModal } from "@/contexts/BookingModalContext";
-
-// Register ScrollTrigger plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 interface HomeHeroProps {
   heading?: string;
@@ -34,249 +28,54 @@ export default function HomeHero({
   const imageElementRef = useRef<HTMLImageElement>(null);
   const glassOverlayRef = useRef<HTMLDivElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
+  const textElementsRef = useRef<(HTMLElement | null)[]>([]);
 
-  // Master animation timeline controlled by scroll
+  // Populate text elements array after refs are mounted
   useEffect(() => {
-    if (
-      !headingRef.current ||
-      !heroSectionRef.current ||
-      !imageWrapperRef.current ||
-      !imageElementRef.current ||
-      !glassOverlayRef.current
-    )
-      return;
-
-    // Split heading into words and letters
-    const headingText = headingRef.current.textContent || heroHeading;
-    const words = headingText.split(" ");
-
-    headingRef.current.innerHTML = words
-      .map((word) => {
-        const wordSpan = `<span style="display: inline-block; white-space: nowrap;">${word
-          .split("")
-          .map((char) => `<span style="display: inline-block;">${char}</span>`)
-          .join("")}</span>`;
-        return wordSpan;
-      })
-      .join(" ");
-
-    const letterSpans = headingRef.current.querySelectorAll(
-      "span > span"
-    ) as NodeListOf<HTMLElement>;
-
-    const elementsToAnimate: HTMLElement[] = [];
+    textElementsRef.current = [];
     if (subheadingRef.current) {
-      elementsToAnimate.push(subheadingRef.current);
+      textElementsRef.current.push(subheadingRef.current);
     }
     if (showButtons && buttonsRef.current) {
-      elementsToAnimate.push(buttonsRef.current);
+      textElementsRef.current.push(buttonsRef.current);
     }
+  }, [showButtons]);
 
-    const initialScale = 0.9;
-    const counterScale = 1 / initialScale;
-
-    // Set initial states to HIDDEN - will animate to visible on load
-    gsap.set(letterSpans, { opacity: 0, y: 30 });
-    gsap.set(elementsToAnimate, { opacity: 0, y: 20 });
-    gsap.set(imageWrapperRef.current, {
-      scale: initialScale,
-      opacity: 0,
-      filter: "blur(10px)",
-    });
-    gsap.set(imageElementRef.current, { scale: counterScale });
-    gsap.set(glassOverlayRef.current, {
-      opacity: 1,
-      backdropFilter: "blur(20px) saturate(180%)",
-    });
-
-    // Create ScrollTrigger timeline (visible → hidden) but keep it paused initially
-    const scrollTl = gsap.timeline({ paused: true });
-
-    // Add all animations to scroll timeline - going from visible to hidden
-    scrollTl.to(letterSpans, {
-      opacity: 0,
-      y: 30,
-      duration: 0.6,
-      ease: "power2.out",
-      stagger: 0.03,
-    })
-      .to(
-        elementsToAnimate,
-        {
-          opacity: 0,
-          y: 20,
-          duration: 0.8,
-          ease: "power2.out",
-          stagger: 0.2,
-        },
-        "-=0.3"
-      )
-      .to(
-        imageWrapperRef.current,
-        {
-          scale: initialScale,
-          opacity: 0,
-          filter: "blur(10px)",
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "-=0.9"
-      )
-      .to(
-        imageElementRef.current,
-        {
-          scale: counterScale,
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "<"
-      )
-      .to(
-        glassOverlayRef.current,
-        {
-          opacity: 1,
-          backdropFilter: "blur(20px) saturate(180%)",
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "<"
-      );
-
-    // Create intro timeline (hidden → visible) - plays once on load
-    const introTl = gsap.timeline();
-    let introCompleted = false;
-    let scrollTriggerInstance: ScrollTrigger | null = null;
-
-    introTl.to(letterSpans, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power2.out",
-      stagger: 0.03,
-    })
-      .to(
-        elementsToAnimate,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          stagger: 0.2,
-        },
-        "-=0.3"
-      )
-      .to(
-        imageWrapperRef.current,
-        {
-          scale: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "-=0.9"
-      )
-      .to(
-        imageElementRef.current,
-        {
-          scale: 1,
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "<"
-      )
-      .to(
-        glassOverlayRef.current,
-        {
-          opacity: 0,
-          backdropFilter: "blur(0px) saturate(100%)",
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        "<"
-      );
-
-    // Create ScrollTrigger for scroll timeline (created after intro or on early scroll)
-    const createScrollTrigger = () => {
-      if (scrollTriggerInstance) return; // Already created
-      
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: heroSectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-        animation: scrollTl,
-        onUpdate: (self) => {
-          // Scroll timeline: progress 0 = visible, progress 1 = hidden
-          // As you scroll down, progress increases, elements disappear
-          scrollTl.progress(self.progress);
-        },
-      });
-    };
-
-    // Function to enable scroll control
-    const enableScrollControl = () => {
-      if (introCompleted) return;
-      introCompleted = true;
-      
-      // Set scroll timeline to start at progress 0 (fully visible - start state)
-      // Scroll timeline goes from visible (progress 0) to hidden (progress 1)
-      scrollTl.progress(0);
-      
-      // Create and enable ScrollTrigger
-      createScrollTrigger();
-    };
-
-    // Play intro animation
-    introTl.play();
-
-    // On intro complete, enable scroll control
-    introTl.eventCallback("onComplete", () => {
-      enableScrollControl();
-    });
-
-    // Detect early scrolling - if user scrolls before intro completes, cancel intro and enable scroll
-    let scrollDetected = false;
-    const handleScroll = () => {
-      if (!introCompleted && !scrollDetected) {
-        scrollDetected = true;
-        // Kill intro animation and jump to final state
-        introTl.kill();
-        // Set all elements to final (visible) state
-        gsap.set(letterSpans, { opacity: 1, y: 0 });
-        gsap.set(elementsToAnimate, { opacity: 1, y: 0 });
-        gsap.set(imageWrapperRef.current, {
-          scale: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-        });
-        gsap.set(imageElementRef.current, { scale: 1 });
-        gsap.set(glassOverlayRef.current, {
-          opacity: 0,
-          backdropFilter: "blur(0px) saturate(100%)",
-        });
-        // Enable scroll control immediately
-        enableScrollControl();
-        // Remove scroll listener
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("wheel", handleScroll);
-        window.removeEventListener("touchmove", handleScroll);
-      }
-    };
-
-    // Add scroll detection listeners
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("wheel", handleScroll, { passive: true });
-    window.addEventListener("touchmove", handleScroll, { passive: true });
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("wheel", handleScroll);
-      window.removeEventListener("touchmove", handleScroll);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, [heading, showButtons, subheading]);
+  useScrollReveal({
+    trigger: heroSectionRef,
+    start: "top 95%", // Trigger early since it's the hero section
+    elements: [
+      { ref: headingRef, preset: "fadeUp", splitLetters: true, stagger: 0.03, duration: 0.6 },
+      { 
+        ref: imageWrapperRef, 
+        preset: "fadeScale", 
+        duration: 1.2,
+        customFrom: { scale: 0.9, opacity: 0, filter: "blur(10px)" },
+        customTo: { scale: 1, opacity: 1, filter: "blur(0px)" },
+        // Start image animation very shortly after heading begins (while letters are still animating)
+        // Heading duration = 0.6s, position "-=0.5" => image starts at ~0.1s into heading animation
+        position: "-=0.5",
+      },
+      { 
+        ref: imageElementRef, 
+        preset: "fadeScale", 
+        duration: 1.2,
+        customFrom: { scale: 1.111 }, // 1 / 0.9 (counterScale)
+        customTo: { scale: 1 },
+        position: "<", // Start with image wrapper
+      },
+      { 
+        ref: glassOverlayRef, 
+        preset: "fadeUp", 
+        duration: 1.2,
+        customFrom: { opacity: 1, backdropFilter: "blur(20px) saturate(180%)" },
+        customTo: { opacity: 0, backdropFilter: "blur(0px) saturate(100%)" },
+        position: "<", // Start with image wrapper
+      },
+      // Text fades in slightly after heading, while image is already animating
+      { ref: textElementsRef, preset: "fadeUp", stagger: 0.2, duration: 0.8 },
+    ],
+  });
 
   return (
     <section ref={heroSectionRef} className="min-h-screen md:pt-12 pt-20">
@@ -316,7 +115,7 @@ export default function HomeHero({
               {/* Glass overlay that fades to solid */}
               <div
                 ref={glassOverlayRef}
-                className="absolute inset-0 bg-white/30 backdrop-blur-[20px]"
+                className="absolute inset-0 bg-white/30"
                 style={{
                   backdropFilter: "blur(20px) saturate(180%)",
                 }}

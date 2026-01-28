@@ -46,20 +46,34 @@ export function useScrollTrigger(
     const animations = setupAnimations();
     if (animations.length === 0) return;
 
+    // Determine if we're using scrub (tied to scroll) or scroll reveal (one-time trigger)
+    const useScrub = config.scrub !== undefined ? config.scrub : false;
+    
+    // Build ScrollTrigger config
+    const scrollTriggerConfig: ScrollTrigger.Vars = {
+      trigger: config.trigger.current,
+      start: config.start || "top 80%",
+      pin: config.pin || false,
+      onUpdate: config.onUpdate,
+      onEnter: config.onEnter,
+      onLeave: config.onLeave,
+      onEnterBack: config.onEnterBack,
+      onLeaveBack: config.onLeaveBack,
+    };
+
+    // For scroll reveal (non-scrub), play once and don't reverse
+    if (!useScrub) {
+      scrollTriggerConfig.once = true; // Play animation once when triggered
+      scrollTriggerConfig.toggleActions = "play none none none"; // Play on enter, do nothing on leave/enterBack/leaveBack
+    } else {
+      // For scrubbed animations, include end and scrub value
+      scrollTriggerConfig.end = config.end || "top 50%";
+      scrollTriggerConfig.scrub = useScrub;
+    }
+
     // Create timeline
     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: config.trigger.current,
-        start: config.start || "top 80%",
-        end: config.end || "top 50%",
-        scrub: config.scrub !== undefined ? config.scrub : 1,
-        pin: config.pin || false,
-        onUpdate: config.onUpdate,
-        onEnter: config.onEnter,
-        onLeave: config.onLeave,
-        onEnterBack: config.onEnterBack,
-        onLeaveBack: config.onLeaveBack,
-      },
+      scrollTrigger: scrollTriggerConfig,
     });
 
     timelineRef.current = tl;

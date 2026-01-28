@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Experience() {
@@ -13,19 +12,15 @@ export default function Experience() {
   // Initialize as false (desktop) to match server-side render
   // Will be updated on client mount
   const [isMobile, setIsMobile] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
-  const cardWrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Set mounted flag and check mobile on client
-    setIsMounted(true);
+    // Check mobile on client
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -37,84 +32,15 @@ export default function Experience() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-
-  // Setup function that prepares ScrollTrigger animations
-  const setupAnimations = (): AnimationConfig[] => {
-    // TODO: Re-enable bodyRef check when body animation is needed
-    // if (!headingRef.current || !bodyRef.current) return [];
-    if (!headingRef.current) return [];
-
-    const animations: AnimationConfig[] = [
-      {
-        element: headingRef.current,
-        from: { opacity: 0, x: -50 },
-        to: {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-        },
-      },
-      // TODO: Re-enable body text animation when needed
-      // {
-      //   element: bodyRef.current,
-      //   from: { opacity: 0, x: -50 },
-      //   to: {
-      //     opacity: 1,
-      //     x: 0,
-      //     duration: 0.8,
-      //   },
-      //   position: "-=0.4",
-      // },
-    ];
-
-    // Add card intro animations - fade in and slide up from bottom, staggered
-    const validCardRefs = cardWrapperRefs.current
-      .slice(0, images.length)
-      .filter((ref) => ref !== null && ref !== undefined);
-    
-    if (validCardRefs.length > 0) {
-      validCardRefs.forEach((cardRef, index) => {
-        animations.push({
-          element: cardRef,
-          from: { 
-            opacity: 0,
-            y: 50,
-            scale: 0.95,
-          },
-          to: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-          },
-          position: index === 0 ? "-=0.2" : "+=0.2", // Staggered spacing
-        });
-      });
-    }
-
-    return animations;
-  };
-
-  // Set body text to final visible state (bypassed animation)
-  useEffect(() => {
-    if (bodyRef.current) {
-      gsap.set(bodyRef.current, {
-        opacity: 1,
-        x: 0,
-      });
-    }
-  }, []);
-
-  // Use the reusable hook
-  useScrollTrigger(
-    {
-      trigger: sectionRef,
-      start: "top 40%", // Start animation later (when section is more in view)
-      end: "top 20%", // End when section is near top of viewport
-      scrub: 0.3, // Small deceleration - animation follows scroll with slight lag (stops when scroll stops)
-    },
-    setupAnimations
-  );
+  useScrollReveal({
+    trigger: sectionRef,
+    elements: [
+      { ref: headingRef, preset: "fadeRight", duration: 0.4 },
+      { ref: bodyRef, preset: "fadeRight", duration: 0.8 },
+      // Animate the container (not the accordion cards) so we don't interfere with the CSS width transition on hover.
+      { ref: cardsContainerRef, preset: "fadeUp", duration: 0.8 },
+    ],
+  });
 
   const images = [
     {
@@ -170,6 +96,7 @@ export default function Experience() {
 
         {/* Desktop: Horizontal Accordion | Mobile: Stacked Cards */}
         <div
+          ref={cardsContainerRef}
           className={`${
             isMobile ? "flex flex-col gap-4" : "flex gap-4 h-[500px] relative"
           }`}
@@ -187,11 +114,6 @@ export default function Experience() {
                   // On mobile, navigate to service page on click
                   router.push(image.href);
                 }
-              }}
-              ref={(el) => {
-                // Set both refs
-                cardWrapperRefs.current[index] = el;
-                imageRefs.current[index] = el;
               }}
               className={`${
                 isMobile
@@ -219,9 +141,6 @@ export default function Experience() {
               {/* Oxide box - Always visible with headline and arrow, body shows when accordion is open */}
               <div
                 key={`card-${index}`}
-                ref={(el) => {
-                  cardRefs.current[index] = el;
-                }}
                 className={`absolute bottom-0 left-0 right-0 bg-oxide/70 backdrop-blur-md text-main-beige rounded-[2rem] border border-main-beige/20 shadow-lg transition-all overflow-hidden max-h-[266px] ${
                   isMobile
                     ? "p-6 mx-4 mb-4"

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useState, useRef } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Pilars() {
@@ -12,7 +11,6 @@ export default function Pilars() {
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const accordionItemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const iconRefs = useRef<(HTMLImageElement | null)[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First item open by default
 
   const pilars = t.pilars.items.map((item, index) => ({
@@ -27,98 +25,17 @@ export default function Pilars() {
 
   const activeImage = openIndex !== null ? pilars[openIndex].image : pilars[0].image;
 
-  // Setup function that prepares ScrollTrigger animations
-  const setupAnimations = (): AnimationConfig[] => {
-    // TODO: Re-enable bodyRef check when body animation is needed
-    // if (!headingRef.current || !bodyRef.current) return [];
-    if (!headingRef.current) return [];
-
-    const animations: AnimationConfig[] = [
-      {
-        element: headingRef.current,
-        from: { opacity: 0, y: 30 },
-        to: {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-        },
-      },
-      // TODO: Re-enable body text animation when needed
-      // {
-      //   element: bodyRef.current,
-      //   from: { opacity: 0, y: 20 },
-      //   to: {
-      //     opacity: 1,
-      //     y: 0,
-      //     duration: 0.8,
-      //   },
-      //   position: "-=0.4",
-      // },
-    ];
-
-    // Add image animation - fade + scale
-    if (imageWrapperRef.current) {
-      animations.push({
-        element: imageWrapperRef.current,
-        from: { 
-          opacity: 0,
-          scale: 0.9,
-        },
-        to: {
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-        },
-        position: "-=0.3",
-      });
-    }
-
-    // Add accordion item animations - staggered from right
-    const validAccordionRefs = accordionItemRefs.current
-      .slice(0, pilars.length)
-      .filter((ref) => ref !== null && ref !== undefined);
-    
-    if (validAccordionRefs.length > 0) {
-      validAccordionRefs.forEach((itemRef, index) => {
-        animations.push({
-          element: itemRef,
-          from: { 
-            opacity: 0,
-            x: 50,
-          },
-          to: {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-          },
-          position: index === 0 ? "-=0.5" : "+=0.15", // Staggered
-        });
-      });
-    }
-
-    return animations;
-  };
-
-  // Set body text to final visible state (bypassed animation)
-  useEffect(() => {
-    if (bodyRef.current) {
-      gsap.set(bodyRef.current, {
-        opacity: 1,
-        y: 0,
-      });
-    }
-  }, []);
-
-  // Use the reusable hook
-  useScrollTrigger(
-    {
-      trigger: sectionRef,
-      start: "top 50%", // Start animation later (when section is more in view)
-      end: "top 0%", // End when section is near top of viewport
-      scrub: 0.3, // Small deceleration
-    },
-    setupAnimations
-  );
+  useScrollReveal({
+    trigger: sectionRef,
+    elements: [
+      { ref: headingRef, preset: "fadeUp", duration: 0.8 },
+      { ref: bodyRef, preset: "fadeUp", duration: 0.8 },
+      { ref: imageWrapperRef, preset: "fadeScale", duration: 1 },
+      // Start accordion items 20% after the image animation begins:
+      // image duration = 1s, so '-=0.8' => accordion starts 0.2s after image start
+      { ref: accordionItemRefs, preset: "fadeLeft", stagger: 0.1, duration: 0.8, position: "-=0.8" },
+    ],
+  });
 
   return (
     <section ref={sectionRef} id="pilars" className="py-8 lg:py-12 bg-bg-beige px-4">
@@ -158,7 +75,7 @@ export default function Pilars() {
                   ref={(el) => {
                     accordionItemRefs.current[index] = el;
                   }}
-                  className="border-b border-[#1a1a1a] overflow-hidden bg-bg-beige transition-all"
+                  className="border-b border-[#1a1a1a] overflow-hidden bg-bg-beige"
                 >
                   {/* Accordion Header */}
                   <button
@@ -168,9 +85,6 @@ export default function Pilars() {
                     <div className="flex items-center gap-4">
                       {/* Icon */}
                       <img
-                        ref={(el) => {
-                          iconRefs.current[index] = el;
-                        }}
                         src={pilar.icon}
                         alt={pilar.iconAlt}
                         className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0"

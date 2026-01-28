@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { gsap } from "gsap";
+import { useRef } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
-import { useScrollTrigger, AnimationConfig } from "@/hooks/useScrollTrigger";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useBookingModal } from "@/contexts/BookingModalContext";
 
@@ -17,83 +16,14 @@ export default function PackagesPage() {
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Setup function that prepares ScrollTrigger animations
-  const setupAnimations = (): AnimationConfig[] => {
-    // TODO: Re-enable bodyRef check when body animation is needed
-    // if (!headingRef.current || !bodyRef.current) return [];
-    if (!headingRef.current) return [];
-
-    const animations: AnimationConfig[] = [
-      {
-        element: headingRef.current,
-        from: { opacity: 0, y: 30 },
-        to: {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-        },
-      },
-      // TODO: Re-enable body text animation when needed
-      // {
-      //   element: bodyRef.current,
-      //   from: { opacity: 0, y: 20 },
-      //   to: {
-      //     opacity: 1,
-      //     y: 0,
-      //     duration: 0.8,
-      //   },
-      //   position: "-=0.4",
-      // },
-    ];
-
-    // Add card animations - scale + fade from bottom, staggered
-    const validCardRefs = cardRefs.current
-      .slice(0, t.packages.items.length)
-      .filter((ref) => ref !== null && ref !== undefined);
-    
-    if (validCardRefs.length > 0) {
-      validCardRefs.forEach((cardRef, index) => {
-        animations.push({
-          element: cardRef,
-          from: { 
-            opacity: 0,
-            y: 50,
-            scale: 0.95,
-          },
-          to: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1,
-          },
-          position: index === 0 ? "-=0.3" : "+=0.2", // Staggered
-        });
-      });
-    }
-
-    return animations;
-  };
-
-  // Set body text to final visible state (bypassed animation)
-  useEffect(() => {
-    if (bodyRef.current) {
-      gsap.set(bodyRef.current, {
-        opacity: 1,
-        y: 0,
-      });
-    }
-  }, []);
-
-  // Use the reusable hook
-  useScrollTrigger(
-    {
-      trigger: sectionRef,
-      start: "top 50%",
-      end: "top 0%",
-      scrub: 0.3,
-    },
-    setupAnimations
-  );
+  useScrollReveal({
+    trigger: sectionRef,
+    elements: [
+      { ref: headingRef, preset: "fadeUp", duration: 0.8 },
+      { ref: bodyRef, preset: "fadeUp", duration: 0.8 },
+      { ref: cardRefs, preset: "fadeScaleUp", stagger: 0.2, duration: 1 },
+    ],
+  });
 
   return (
     <>

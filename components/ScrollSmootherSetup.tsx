@@ -19,7 +19,7 @@ export default function ScrollSmootherSetup() {
         const smoother = ScrollSmoother.create({
           wrapper: "#smooth-wrapper",
           content: "#smooth-content",
-          smooth: 8, // Smoothness: 0.8-1.2 range (1 = balanced)
+          smooth: 1.2, // Smoothness: 0.8-1.2 range (1 = balanced)
           effects: true, // Enable data-speed and data-lag for parallax
           smoothTouch: false, // Disable on touch devices for better performance
           normalizeScroll: true, // Normalize scroll speed across browsers
