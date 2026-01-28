@@ -117,6 +117,8 @@ export default function HomeHero({
                 src="/images/hero.jpg"
                 alt={t.hero.imageAlt}
                 className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
               />
               {/* Glass overlay that fades to solid */}
               <div
