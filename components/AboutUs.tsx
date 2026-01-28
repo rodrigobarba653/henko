@@ -24,8 +24,14 @@ export default function AboutUs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left side - 50% - Heading */}
           <div>
+            {/* SEO-friendly heading - hidden visually but accessible to screen readers and crawlers */}
+            <h2 className="sr-only">
+              {t.aboutUs.heading}
+            </h2>
+            {/* Animated heading - visible but hidden from screen readers */}
             <h2
               ref={headingRef}
+              aria-hidden="true"
               className="text-4xl md:text-5xl lg:text-5xl font-semibold text-main-beige font-heading"
             >
               {t.aboutUs.heading}

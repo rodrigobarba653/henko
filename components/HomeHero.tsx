@@ -83,8 +83,14 @@ export default function HomeHero({
         <div className="grid grid-cols-1 md:grid-cols-10 gap-12 items-center">
           {/* Left side - 40% - Text content */}
           <div className="sm:col-span-5">
+            {/* SEO-friendly heading - hidden visually but accessible to screen readers and crawlers */}
+            <h1 className="sr-only">
+              {heroHeading}
+            </h1>
+            {/* Animated heading - visible but hidden from screen readers */}
             <h1
               ref={headingRef}
+              aria-hidden="true"
               className="text-5xl md:text-6xl lg:text-7xl font-semibold text-[#1a1a1a] font-heading mb-6"
             >
               {heroHeading}
