@@ -29,7 +29,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${translations.en.metadata.title} | ${service.name}`,
+    title: `${translations.en.metadata.title} | ${service.heading}`,
     description: service.description,
     alternates: {
       canonical: `${siteUrl}/services/${params.slug}/`,
