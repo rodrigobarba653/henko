@@ -168,7 +168,7 @@ export const translations: Record<Language, Translations> = {
       heading: "The Art of Living Better, Longer",
       subheading: "Where ancient wisdom meets cutting-edge biohacking.",
       buttonPrimary: "Book Now",
-      buttonSecondary: "Meet Us",
+      buttonSecondary: "Text Us",
       imageAlt: "Zen yoga and wellness",
     },
     aboutUs: {
@@ -370,7 +370,7 @@ export const translations: Record<Language, Translations> = {
       heading: "El Arte de Vivir Mejor, Por Más Tiempo",
       subheading: "Donde la sabiduría antigua se encuentra con el biohacking de vanguardia.",
       buttonPrimary: "Reservar Ahora",
-      buttonSecondary: "Conócenos",
+      buttonSecondary: "Escíbenos",
       imageAlt: "Yoga zen y bienestar",
     },
     aboutUs: {
