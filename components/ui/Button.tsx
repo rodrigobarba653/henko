@@ -2,11 +2,13 @@
 
 import { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, AnchorHTMLAttributes<HTMLAnchorElement> {
+type ButtonProps = (
+  | (ButtonHTMLAttributes<HTMLButtonElement> & { href?: never })
+  | (AnchorHTMLAttributes<HTMLAnchorElement> & { href: string })
+) & {
   children: ReactNode;
   variant?: "primary" | "secondary";
-  href?: string;
-}
+};
 
 export default function Button({
   children,
