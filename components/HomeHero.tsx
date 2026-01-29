@@ -101,7 +101,7 @@ export default function HomeHero({
             {showButtons && (
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
                 <Button variant="primary" onClick={openModal}>{t.hero.buttonPrimary}</Button>
-                <Button variant="secondary">{t.hero.buttonSecondary}</Button>
+                <Button variant="secondary" href="https://wa.me/525535663796" target="_blank" rel="noopener noreferrer">{t.hero.buttonSecondary}</Button>
               </div>
             )}
           </div>

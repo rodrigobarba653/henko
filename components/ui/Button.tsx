@@ -1,16 +1,18 @@
 "use client";
 
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode;
   variant?: "primary" | "secondary";
+  href?: string;
 }
 
 export default function Button({
   children,
   variant = "primary",
   className = "",
+  href,
   ...props
 }: ButtonProps) {
   const baseClasses =
@@ -25,8 +27,16 @@ export default function Button({
   const combinedClasses =
     `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
 
+  if (href) {
+    return (
+      <a href={href} className={combinedClasses} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button className={combinedClasses} {...props}>
+    <button className={combinedClasses} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
       {children}
     </button>
   );
