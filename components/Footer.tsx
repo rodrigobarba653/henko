@@ -20,21 +20,21 @@ export default function Footer() {
 
             {/* Contact Info - Below heading */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* First part - Address */}
-            <div>
-              <h3 className="text-sm md:text-base font-medium text-main-beige uppercase mb-4 font-body tracking-wider">
-                {t.footer.address}
-              </h3>
-              <p className="text-lg text-main-beige leading-relaxed font-heading">
-                {t.footer.addressLine1}
-                <br />
-                {t.footer.addressLine2}
-                <br />
-                {t.footer.addressLine3}
-                <br />
-                {t.footer.addressLine4}
-              </p>
-            </div>
+              {/* First part - Address */}
+              <div>
+                <h3 className="text-sm md:text-base font-medium text-main-beige uppercase mb-4 font-body tracking-wider">
+                  {t.footer.address}
+                </h3>
+                <p className="text-lg text-main-beige leading-relaxed font-heading">
+                  {t.footer.addressLine1}
+                  <br />
+                  {t.footer.addressLine2}
+                  <br />
+                  {t.footer.addressLine3}
+                  <br />
+                  {t.footer.addressLine4}
+                </p>
+              </div>
 
               {/* Second part - Phone, Email, Social */}
               <div className="flex flex-col gap-6">
@@ -91,7 +91,7 @@ export default function Footer() {
                 <div className="flex items-center gap-4">
                   {/* Instagram */}
                   <Link
-                    href="https://instagram.com"
+                    href="https://www.instagram.com/henkowellnessclub?igsh=MWd4YXR0NmQ1c3IyZA=="
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-main-beige/20 rounded-lg flex items-center justify-center hover:bg-main-beige/30 transition-colors"
@@ -115,27 +115,23 @@ export default function Footer() {
                     </svg>
                   </Link>
 
-                  {/* Facebook */}
+                  {/* TikTok */}
                   <Link
-                    href="https://facebook.com"
+                    href="https://www.tiktok.com/@henkowellnessclub?_r=1&_t=ZS-93VbwngqZyX"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-main-beige/20 rounded-lg flex items-center justify-center hover:bg-main-beige/30 transition-colors"
-                    aria-label={t.footer.facebook}
+                    aria-label={t.footer.tiktok}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      fill="currentColor"
                       className="text-main-beige"
                     >
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                     </svg>
                   </Link>
                 </div>
@@ -145,8 +141,8 @@ export default function Footer() {
 
           {/* Right side - Logo */}
           <div className="lg:flex lg:items-center lg:justify-end flex-shrink-0">
-            <img 
-              src="/images/logo-beige.svg" 
+            <img
+              src="/images/logo-beige.svg"
               alt={t.footer.logoAlt}
               className="h-24 md:h-24 lg:h-32 w-auto"
             />

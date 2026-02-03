@@ -123,6 +123,7 @@ export interface Translations {
     email: string;
     instagram: string;
     facebook: string;
+    tiktok: string;
     logoAlt: string;
   };
 
@@ -323,14 +324,15 @@ export const translations: Record<Language, Translations> = {
     footer: {
       contact: "Contact",
       address: "Address",
-      addressLine1: "Oaxaca #96 int. 103",
-      addressLine2: "Col. Roma Norte",
+      addressLine1: "⁠Galileo 8 - Piso 2,",
+      addressLine2: "Polanco",
       addressLine3: "CDMX",
       addressLine4: "C.P. 06700",
-      phone: "01 (55) 71587284",
-      email: "info@henko.mx",
+      phone: "⁠5535663796",
+      email: " ⁠⁠hola@henkowellnessclub.com",
       instagram: "Instagram",
       facebook: "Facebook",
+      tiktok: "TikTok",
       logoAlt: "Henko Logo",
     },
     conceptSection: {
@@ -368,7 +370,8 @@ export const translations: Record<Language, Translations> = {
     },
     hero: {
       heading: "El Arte de Vivir Mejor, Por Más Tiempo",
-      subheading: "Donde la sabiduría antigua se encuentra con el biohacking de vanguardia.",
+      subheading:
+        "Donde la sabiduría antigua se encuentra con el biohacking de vanguardia.",
       buttonPrimary: "Reservar Ahora",
       buttonSecondary: "Escíbenos",
       imageAlt: "Yoga zen y bienestar",
@@ -537,14 +540,15 @@ export const translations: Record<Language, Translations> = {
     footer: {
       contact: "Contacto",
       address: "Dirección",
-      addressLine1: "Oaxaca #96 int. 103",
-      addressLine2: "Col. Roma Norte",
+      addressLine1: "  ⁠Galileo 8 - Piso 2,",
+      addressLine2: "Polanco",
       addressLine3: "CDMX",
       addressLine4: "C.P. 06700",
-      phone: "01 (55) 71587284",
-      email: "info@henko.mx",
+      phone: "5535663796",
+      email: " ⁠⁠hola@henkowellnessclub.com",
       instagram: "Instagram",
       facebook: "Facebook",
+      tiktok: "TikTok",
       logoAlt: "Logo de Henko",
     },
   },
