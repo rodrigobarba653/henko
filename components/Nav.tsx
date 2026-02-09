@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useBookingModal } from "@/contexts/BookingModalContext";
@@ -20,21 +21,57 @@ export default function Nav() {
   const isHomepage = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsAtTop(window.scrollY === 0);
+    const getScrollTop = (): number => {
+      if (typeof window === "undefined") return 0;
+      try {
+        const smoother = ScrollSmoother.get();
+        if (smoother && typeof smoother.scrollTop === "function") {
+          const v = smoother.scrollTop();
+          return typeof v === "number" ? v : 0;
+        }
+      } catch {
+        // ScrollSmoother not created yet or not available
+      }
+      return (
+        window.scrollY ??
+        document.documentElement.scrollTop ??
+        document.body.scrollTop ??
+        0
+      );
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check initial state
+    let lastAtTop: boolean | null = null;
+    const updateAtTop = () => {
+      const scrollTop = getScrollTop();
+      const atTop = scrollTop <= 10;
+      if (lastAtTop !== atTop) {
+        lastAtTop = atTop;
+        setIsAtTop(atTop);
+      }
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => requestAnimationFrame(updateAtTop);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("scroll", handleScroll, { passive: true });
+
+    updateAtTop();
+
+    const intervalId = setInterval(updateAtTop, 100);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
+      clearInterval(intervalId);
+    };
   }, []);
 
   // Handle scroll to section when navigating from another page or when page loads with hash
   useEffect(() => {
     if (isHomepage && typeof window !== "undefined") {
-      const targetId = pendingScrollTarget.current || window.location.hash.substring(1);
-      
+      const targetId =
+        pendingScrollTarget.current || window.location.hash.substring(1);
+
       if (targetId) {
         // Wait for the page to fully render and all components to mount
         const scrollToSection = () => {
@@ -44,7 +81,7 @@ export default function Nav() {
             const targetPosition = targetElement.offsetTop - navHeight;
             window.scrollTo({
               top: targetPosition,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
             // Clear the pending scroll target after scrolling
             pendingScrollTarget.current = null;
@@ -71,7 +108,7 @@ export default function Nav() {
           x: 0,
           duration: 0.3,
           ease: "power2.out",
-        }
+        },
       );
       document.body.style.overflow = "hidden";
     } else {
@@ -93,13 +130,16 @@ export default function Nav() {
     { label: t.common.nav.packages, href: "/packages" },
   ];
 
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     setIsMenuOpen(false);
-    
+
     if (href.startsWith("#")) {
       e.preventDefault();
       const targetId = href.substring(1);
-      
+
       // If we're on the homepage, scroll directly to the section
       if (isHomepage) {
         const targetElement = document.getElementById(targetId);
@@ -108,7 +148,7 @@ export default function Nav() {
           const targetPosition = targetElement.offsetTop - navHeight;
           window.scrollTo({
             top: targetPosition,
-            behavior: 'smooth'
+            behavior: "smooth",
           });
         }
       } else {
@@ -133,20 +173,20 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-8xl mx-auto lg:px-16 px-4 lg:py-0">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between">
             {/* Logo and Nav Items */}
             <div className="flex items-center lg:space-x-12 space-x-8">
               <div className="flex-shrink-0">
-                <Link 
-                  href="/" 
+                <Link
+                  href="/"
                   onClick={handleLinkClick}
-                  className="flex items-center"
+                  className="flex items-center h-20"
                 >
-                  <img 
-                    src="/images/logo.svg" 
+                  <img
+                    src="/images/h-logo.svg"
                     alt={t.navSection.logoAlt}
-                    className={`h-8 md:h-12 w-auto transition-all duration-300 ${
-                      !isAtTop ? "md:h-8 h-8" : ""
+                    className={`w-auto transition-all duration-300 ${
+                      isAtTop ? "h-12 md:h-20" : "h-8 md:h-12"
                     }`}
                   />
                 </Link>
@@ -171,12 +211,18 @@ export default function Nav() {
               <button
                 onClick={() => setLanguage(language === "en" ? "es" : "en")}
                 className="px-4 py-2 rounded-full border-2 border-main-green text-main-green hover:bg-main-green hover:text-main-beige transition-colors font-medium text-sm"
-                aria-label={language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+                aria-label={
+                  language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"
+                }
               >
-                {language === "en" ? t.navSection.languageSpanish : t.navSection.languageEnglish}
+                {language === "en"
+                  ? t.navSection.languageSpanish
+                  : t.navSection.languageEnglish}
               </button>
               {/* Booking Button */}
-              <Button variant="primary" onClick={openModal}>{t.common.nav.booking}</Button>
+              <Button variant="primary" onClick={openModal}>
+                {t.common.nav.booking}
+              </Button>
             </div>
 
             {/* Mobile Hamburger Button */}
@@ -252,9 +298,13 @@ export default function Nav() {
             <button
               onClick={() => setLanguage(language === "en" ? "es" : "en")}
               className="px-6 py-3 rounded-full border-2 border-main-beige text-main-beige hover:bg-main-beige hover:text-oxide transition-colors font-medium text-lg"
-              aria-label={language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+              aria-label={
+                language === "en" ? "Switch to Spanish" : "Cambiar a Inglés"
+              }
             >
-              {language === "en" ? t.navSection.languageSpanish : t.navSection.languageEnglish}
+              {language === "en"
+                ? t.navSection.languageSpanish
+                : t.navSection.languageEnglish}
             </button>
           </div>
 

@@ -9,6 +9,7 @@ interface ServiceDetailProps {
     items: Array<{
       title: string;
       description: string;
+      wide?: boolean;
       bulletPoints?: Array<{
         label: string;
         icon?: string;
@@ -29,7 +30,7 @@ interface ServiceDetailProps {
 
 export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
   const isSpaBeauty = slug === "spa-beauty";
-  
+
   // For spa-beauty: first item goes left, rest go right
   const leftItem = isSpaBeauty ? service.items[0] : null;
   const rightItems = isSpaBeauty ? service.items.slice(1) : service.items;
@@ -63,10 +64,12 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                 <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
                   {leftItem.title}
                 </h3>
-                <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                  {leftItem.description}
-                </p>
-                
+                {leftItem.description ? (
+                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                    {leftItem.description}
+                  </p>
+                ) : null}
+
                 {/* Personalization Section */}
                 {leftItem.personalization && (
                   <div className="mt-8 pt-8 border-t border-main-beige/20">
@@ -76,25 +79,29 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                     <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
                       {leftItem.personalization.description}
                     </p>
-                    
+
                     {/* Bullet Points with Iconify Icons */}
                     <ul className="space-y-4">
-                      {leftItem.personalization.bulletPoints.map((bullet, bulletIndex) => (
-                        <li
-                          key={bulletIndex}
-                          className="flex items-center text-main-beige font-body"
-                        >
-                          <Icon
-                            icon={bullet.icon}
-                            className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
-                          />
-                          <span className="text-base md:text-lg">{bullet.label}</span>
-                        </li>
-                      ))}
+                      {leftItem.personalization.bulletPoints.map(
+                        (bullet, bulletIndex) => (
+                          <li
+                            key={bulletIndex}
+                            className="flex items-center text-main-beige font-body"
+                          >
+                            <Icon
+                              icon={bullet.icon}
+                              className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
+                            />
+                            <span className="text-base md:text-lg">
+                              {bullet.label}
+                            </span>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Bullet Points with Icons */}
                 {leftItem.bulletPoints && leftItem.bulletPoints.length > 0 && (
                   <ul className="space-y-3 mt-6">
@@ -116,14 +123,16 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        <span className="text-base md:text-lg">{bullet.label}</span>
+                        <span className="text-base md:text-lg">
+                          {bullet.label}
+                        </span>
                       </li>
                     ))}
                   </ul>
                 )}
               </div>
             )}
-            
+
             {/* Right Side - Stacked Cards */}
             <div className="flex flex-col gap-8 h-full">
               {rightItems.map((item, index) => (
@@ -134,10 +143,12 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                   <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                    {item.description}
-                  </p>
-                  
+                  {item.description ? (
+                    <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                      {item.description}
+                    </p>
+                  ) : null}
+
                   {/* Personalization Section */}
                   {item.personalization && (
                     <div className="mt-8 pt-8 border-t border-main-beige/20">
@@ -147,25 +158,29 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                       <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
                         {item.personalization.description}
                       </p>
-                      
+
                       {/* Bullet Points with Iconify Icons */}
                       <ul className="space-y-4">
-                        {item.personalization.bulletPoints.map((bullet, bulletIndex) => (
-                          <li
-                            key={bulletIndex}
-                            className="flex items-center text-main-beige font-body"
-                          >
-                            <Icon
-                              icon={bullet.icon}
-                              className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
-                            />
-                            <span className="text-base md:text-lg">{bullet.label}</span>
-                          </li>
-                        ))}
+                        {item.personalization.bulletPoints.map(
+                          (bullet, bulletIndex) => (
+                            <li
+                              key={bulletIndex}
+                              className="flex items-center text-main-beige font-body"
+                            >
+                              <Icon
+                                icon={bullet.icon}
+                                className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
+                              />
+                              <span className="text-base md:text-lg">
+                                {bullet.label}
+                              </span>
+                            </li>
+                          ),
+                        )}
                       </ul>
                     </div>
                   )}
-                  
+
                   {/* Bullet Points with Icons */}
                   {item.bulletPoints && item.bulletPoints.length > 0 && (
                     <ul className="space-y-3 mt-6">
@@ -187,7 +202,9 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                               d="M5 13l4 4L19 7"
                             />
                           </svg>
-                          <span className="text-base md:text-lg">{bullet.label}</span>
+                          <span className="text-base md:text-lg">
+                            {bullet.label}
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -202,15 +219,17 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
             {service.items.map((item, index) => (
               <div
                 key={index}
-                className="bg-main-green rounded-[2rem] p-8 text-main-beige"
+                className={`bg-main-green rounded-[2rem] p-8 text-main-beige ${item.wide ? "md:col-span-2 lg:col-span-2" : ""}`}
               >
                 <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
                   {item.title}
                 </h3>
-                <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                  {item.description}
-                </p>
-                
+                {item.description ? (
+                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                    {item.description}
+                  </p>
+                ) : null}
+
                 {/* Personalization Section */}
                 {item.personalization && (
                   <div className="mt-8 pt-8 border-t border-main-beige/20">
@@ -220,25 +239,29 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                     <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
                       {item.personalization.description}
                     </p>
-                    
+
                     {/* Bullet Points with Iconify Icons */}
                     <ul className="space-y-4">
-                      {item.personalization.bulletPoints.map((bullet, bulletIndex) => (
-                        <li
-                          key={bulletIndex}
-                          className="flex items-center text-main-beige font-body"
-                        >
-                          <Icon
-                            icon={bullet.icon}
-                            className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
-                          />
-                          <span className="text-base md:text-lg">{bullet.label}</span>
-                        </li>
-                      ))}
+                      {item.personalization.bulletPoints.map(
+                        (bullet, bulletIndex) => (
+                          <li
+                            key={bulletIndex}
+                            className="flex items-center text-main-beige font-body"
+                          >
+                            <Icon
+                              icon={bullet.icon}
+                              className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
+                            />
+                            <span className="text-base md:text-lg">
+                              {bullet.label}
+                            </span>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Bullet Points with Icons */}
                 {item.bulletPoints && item.bulletPoints.length > 0 && (
                   <ul className="space-y-3 mt-6">
@@ -260,7 +283,9 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        <span className="text-base md:text-lg">{bullet.label}</span>
+                        <span className="text-base md:text-lg">
+                          {bullet.label}
+                        </span>
                       </li>
                     ))}
                   </ul>

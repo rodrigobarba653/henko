@@ -15,14 +15,14 @@ export default function ServiceHero({
     <section className="relative w-full py-8 md:py-12 mt-12">
       <div className="max-w-7xl mx-auto px-4">
         <div
-          className="relative w-full h-[40vh] lg:h-[70vh] md:min-h-[500px] rounded-[2rem] overflow-hidden bg-cover bg-center bg-no-repeat"
+          className="relative w-full h-[40vh] lg:h-[500px] md:min-h-[500px] rounded-[2rem] overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${imageUrl})`,
           }}
         >
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/50"></div>
-          
+
           {/* Content overlay */}
           <div className="relative h-full flex items-center justify-center">
             <div className="text-center px-4 sm:px-6 lg:px-8">

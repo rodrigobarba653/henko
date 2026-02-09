@@ -45,10 +45,16 @@ export default function HomeHero({
     trigger: heroSectionRef,
     start: "top 95%", // Trigger early since it's the hero section
     elements: [
-      { ref: headingRef, preset: "fadeUp", splitLetters: true, stagger: 0.03, duration: 0.6 },
-      { 
-        ref: imageWrapperRef, 
-        preset: "fadeScale", 
+      {
+        ref: headingRef,
+        preset: "fadeUp",
+        splitLetters: true,
+        stagger: 0.03,
+        duration: 0.6,
+      },
+      {
+        ref: imageWrapperRef,
+        preset: "fadeScale",
         duration: 1.2,
         customFrom: { scale: 0.9, opacity: 0, filter: "blur(10px)" },
         customTo: { scale: 1, opacity: 1, filter: "blur(0px)" },
@@ -56,17 +62,17 @@ export default function HomeHero({
         // Heading duration = 0.6s, position "-=0.5" => image starts at ~0.1s into heading animation
         position: "-=0.5",
       },
-      { 
-        ref: imageElementRef, 
-        preset: "fadeScale", 
+      {
+        ref: imageElementRef,
+        preset: "fadeScale",
         duration: 1.2,
         customFrom: { scale: 1.111 }, // 1 / 0.9 (counterScale)
         customTo: { scale: 1 },
         position: "<", // Start with image wrapper
       },
-      { 
-        ref: glassOverlayRef, 
-        preset: "fadeUp", 
+      {
+        ref: glassOverlayRef,
+        preset: "fadeUp",
         duration: 1.2,
         customFrom: { opacity: 1, backdropFilter: "blur(20px) saturate(180%)" },
         customTo: { opacity: 0, backdropFilter: "blur(0px) saturate(100%)" },
@@ -78,15 +84,13 @@ export default function HomeHero({
   });
 
   return (
-    <section ref={heroSectionRef} className="min-h-screen md:pt-12 pt-20">
+    <section ref={heroSectionRef} className=" md:pt-12 pt-20">
       <div className="max-w-7xl mx-auto p-4 lg:px-8 lg:py-12">
         <div className="grid grid-cols-1 md:grid-cols-10 gap-12 items-center">
           {/* Left side - 40% - Text content */}
           <div className="sm:col-span-5">
             {/* SEO-friendly heading - hidden visually but accessible to screen readers and crawlers */}
-            <h1 className="sr-only">
-              {heroHeading}
-            </h1>
+            <h1 className="sr-only">{heroHeading}</h1>
             {/* Animated heading - visible but hidden from screen readers */}
             <h1
               ref={headingRef}
@@ -100,8 +104,17 @@ export default function HomeHero({
             </p>
             {showButtons && (
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-                <Button variant="primary" onClick={openModal}>{t.hero.buttonPrimary}</Button>
-                <Button variant="secondary" href="https://wa.me/525535663796" target="_blank" rel="noopener noreferrer">{t.hero.buttonSecondary}</Button>
+                <Button variant="primary" onClick={openModal}>
+                  {t.hero.buttonPrimary}
+                </Button>
+                <Button
+                  variant="secondary"
+                  href="https://wa.me/525535663796"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t.hero.buttonSecondary}
+                </Button>
               </div>
             )}
           </div>

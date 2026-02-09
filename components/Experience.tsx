@@ -75,7 +75,6 @@ export default function Experience() {
     },
   ];
 
-
   const handleImageHover = (index: number) => {
     if (index !== activeIndex) {
       setActiveIndex(index);
@@ -83,10 +82,17 @@ export default function Experience() {
   };
 
   return (
-    <section ref={sectionRef} id="experience" className="py-16 lg:py-12 bg-bg-beige">
+    <section
+      ref={sectionRef}
+      id="experience"
+      className="py-16 lg:py-12 bg-bg-beige"
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="md:max-w-[50%] mb-12">
-          <h2 ref={headingRef} className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4">
+          <h2
+            ref={headingRef}
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4"
+          >
             {t.experience.heading}
           </h2>
           <p ref={bodyRef} className="text-lg text-[#1a1a1a] leading-relaxed">
@@ -145,8 +151,8 @@ export default function Experience() {
                   isMobile
                     ? "p-6 mx-4 mb-4"
                     : activeIndex === index
-                    ? "p-8 md:p-10 mx-6 mb-6"
-                    : "p-6 mx-6 mb-6"
+                      ? "p-8 md:p-10 mx-6 mb-6"
+                      : "p-6 mx-6 mb-6"
                 }`}
                 style={{
                   maxWidth: isMobile
@@ -163,7 +169,7 @@ export default function Experience() {
                   }}
                   className={`absolute ${
                     isMobile ? "top-4 right-4" : "top-6 right-6"
-                  } w-10 h-10 bg-main-beige rounded-full flex items-center justify-center text-oxide hover:bg-main-beige/90 transition-colors shadow-md z-10`}
+                  } w-10 h-10 bg-main-beige rounded-full flex items-center justify-center text-oxide hover:bg-main-beige/90 transition-all shadow-md z-10`}
                   aria-label={t.experience.viewMore}
                 >
                   <svg
@@ -192,20 +198,20 @@ export default function Experience() {
 
                 {/* Subheading and Body - Always rendered, visibility controlled by CSS */}
                 {!isMobile && (
-                  <p 
+                  <p
                     className={`text-sm md:text-sm font-medium text-main-beige uppercase mb-3 font-body tracking-wider transition-all duration-300 ${
-                      activeIndex === index 
-                        ? "opacity-100 h-auto mb-3 delay-[400ms]" 
+                      activeIndex === index
+                        ? "opacity-100 h-auto mb-3 delay-[400ms]"
                         : "opacity-0 h-0 mb-0 overflow-hidden"
                     }`}
                   >
                     {image.card.subheading}
                   </p>
                 )}
-                <p 
+                <p
                   className={`text-base md:text-lg text-main-beige leading-relaxed font-body transition-all duration-500 ${
-                    (!isMobile && activeIndex === index) || isMobile 
-                      ? "opacity-100 h-auto delay-[500ms]" 
+                    (!isMobile && activeIndex === index) || isMobile
+                      ? "opacity-100 h-auto delay-[500ms]"
                       : "opacity-0 h-0 overflow-hidden"
                   }`}
                 >

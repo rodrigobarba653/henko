@@ -11,6 +11,7 @@ export interface Service {
   items: Array<{
     title: string;
     description: string;
+    wide?: boolean;
     bulletPoints?: Array<{
       label: string;
       icon?: string;
@@ -58,6 +59,29 @@ export const servicesTranslations: Record<Language, Service[]> = {
           description:
             "Flush out toxins and improve lymphatic drainage with precision air-pressure technology.",
         },
+        {
+          title: "Longevity Capsule (4 treatments, 1 Pod)",
+          description: "",
+          wide: true,
+          bulletPoints: [
+            {
+              label:
+                "Infrared Therapy: Deep-penetrating heat to detoxify cells and soothe muscles.",
+            },
+            {
+              label:
+                "Aromatherapy: Pure essential oils to balance the nervous system and enhance mood.",
+            },
+            {
+              label:
+                "Oxygen Therapy: Vitalizing O₂ flow to sharpen mental clarity and speed recovery.",
+            },
+            {
+              label:
+                "Salt Therapy: Himalayan salt infusion to clear airways and rejuvenate the skin.",
+            },
+          ],
+        },
       ],
     },
     {
@@ -74,6 +98,13 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Yoga",
           description:
             "Flow with purpose. Balance strength and flexibility while grounding your energy.",
+          bulletPoints: [
+            { label: "Vinyasa" },
+            { label: "Restorative & Soundbath" },
+            { label: "Yin Yoga" },
+            { label: "Slow Flow" },
+            { label: "Power Yoga" },
+          ],
         },
         {
           title: "Pilates",
@@ -167,6 +198,29 @@ export const servicesTranslations: Record<Language, Service[]> = {
           description:
             "Elimina toxinas y mejora el drenaje linfático con tecnología de presión de aire de precisión.",
         },
+        {
+          title: "Cápsula de Longevidad (4 tratamientos, 1 Pod)",
+          description: "",
+          wide: true,
+          bulletPoints: [
+            {
+              label:
+                "Terapia Infrarroja: Calor de penetración profunda para desintoxicar células y relajar músculos.",
+            },
+            {
+              label:
+                "Aromaterapia: Aceites esenciales puros para equilibrar el sistema nervioso y mejorar el estado de ánimo.",
+            },
+            {
+              label:
+                "Terapia de Oxígeno: Flujo vitalizante de O₂ para agudizar la claridad mental y acelerar la recuperación.",
+            },
+            {
+              label:
+                "Terapia de Sal: Infusión de sal del Himalaya para limpiar las vías respiratorias y rejuvenecer la piel.",
+            },
+          ],
+        },
       ],
     },
     {
@@ -183,6 +237,13 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Yoga",
           description:
             "Fluye con propósito. Equilibra fuerza y flexibilidad mientras conectas tu energía.",
+          bulletPoints: [
+            { label: "Vinyasa" },
+            { label: "Restaurativo & Soundbath" },
+            { label: "Yin Yoga" },
+            { label: "Slow Flow" },
+            { label: "Power Yoga" },
+          ],
         },
         {
           title: "Pilates",

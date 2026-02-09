@@ -226,7 +226,8 @@ export const translations: Record<Language, Translations> = {
       items: [
         {
           heading: "Cellular Vitality (Science)",
-          subheading: "The Hyperbaric Chamber & Supplements.",
+          subheading:
+            "The Hyperbaric Chamber, Longevity Capsule & Supplements.",
           body: "Real wellness starts at the cellular level. We provide the oxygen, nutrients, and environment needed to repair and rejuvenate your body from the inside out.",
           iconAlt: "Cellular Vitality",
         },
@@ -251,7 +252,7 @@ export const translations: Record<Language, Translations> = {
         {
           heading: "Aesthetic Alchemy (Beauty)",
           subheading: "Spa, Face Yoga & Retail.",
-          body: "The Concept: Beauty is the reflection of internal health. Our spa and retail rituals nourish both skin and soul.",
+          body: "Natural lifting techniques that tone facial muscles and boost collagen, complemented by rejuvenating and hydrating facials for a refined, non-invasive glow.",
           iconAlt: "Aesthetic Alchemy",
         },
         {
@@ -327,7 +328,7 @@ export const translations: Record<Language, Translations> = {
       addressLine1: "⁠Galileo 8 - Piso 2,",
       addressLine2: "Polanco",
       addressLine3: "CDMX",
-      addressLine4: "C.P. 06700",
+      addressLine4: "C.P. 11550",
       phone: "⁠5535663796",
       email: " ⁠⁠hola@henkowellnessclub.com",
       instagram: "Instagram",
@@ -467,7 +468,7 @@ export const translations: Record<Language, Translations> = {
         {
           heading: "Alquimia Estética (Belleza)",
           subheading: "Spa, Yoga Facial y Tienda.",
-          body: "El Concepto: La belleza es el reflejo de la salud interna. Nuestros rituales de spa y tienda nutren tanto la piel como el alma.",
+          body: "Técnicas de lifting natural que tonifican los músculos faciales y potencian el colágeno, complementadas con tratamientos faciales rejuvenecedores e hidratantes para un brillo refinado y no invasivo.",
           iconAlt: "Alquimia Estética",
         },
         {
@@ -543,7 +544,7 @@ export const translations: Record<Language, Translations> = {
       addressLine1: "  ⁠Galileo 8 - Piso 2,",
       addressLine2: "Polanco",
       addressLine3: "CDMX",
-      addressLine4: "C.P. 06700",
+      addressLine4: "C.P. 11550",
       phone: "5535663796",
       email: " ⁠⁠hola@henkowellnessclub.com",
       instagram: "Instagram",
