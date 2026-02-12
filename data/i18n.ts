@@ -125,6 +125,7 @@ export interface Translations {
     facebook: string;
     tiktok: string;
     logoAlt: string;
+    privacyPolicy: string;
   };
 
   // Concept Section (separate from common)
@@ -335,6 +336,7 @@ export const translations: Record<Language, Translations> = {
       facebook: "Facebook",
       tiktok: "TikTok",
       logoAlt: "Henko Logo",
+      privacyPolicy: "Privacy Policy",
     },
     conceptSection: {
       heading: "The Concept",
@@ -551,6 +553,7 @@ export const translations: Record<Language, Translations> = {
       facebook: "Facebook",
       tiktok: "TikTok",
       logoAlt: "Logo de Henko",
+      privacyPolicy: "Aviso de Privacidad",
     },
   },
 };

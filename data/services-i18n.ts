@@ -11,6 +11,7 @@ export interface Service {
   items: Array<{
     title: string;
     description: string;
+    imageUrl?: string;
     wide?: boolean;
     bulletPoints?: Array<{
       label: string;
@@ -43,25 +44,30 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Cold Plunge",
           description:
             "Forge mental resilience and trigger metabolic health through controlled thermal shock.",
+          imageUrl: "/images/cold-plunge.jpg",
         },
         {
           title: "Infrared Sauna",
           description:
             "Detoxify at a cellular level and improve cardiovascular health with deep-penetrating heat.",
+          imageUrl: "/images/infrared-sauna.jpg",
         },
         {
           title: "Hyperbaric Chamber",
           description:
             "Saturate your body with pure oxygen to accelerate tissue repair and cognitive function.",
+          imageUrl: "/images/hyperbaric-chamber.jpg",
         },
         {
           title: "Compression Therapy",
           description:
             "Flush out toxins and improve lymphatic drainage with precision air-pressure technology.",
+          imageUrl: "/images/compression-therapy.jpg",
         },
         {
           title: "Longevity Capsule (4 treatments, 1 Pod)",
           description: "",
+          imageUrl: "/images/longevity-capsule.jpg",
           wide: true,
           bulletPoints: [
             {
@@ -182,25 +188,30 @@ export const servicesTranslations: Record<Language, Service[]> = {
           title: "Inmersión en Frío",
           description:
             "Forja resiliencia mental y activa la salud metabólica a través de choque térmico controlado.",
+          imageUrl: "/images/cold-plunge.jpg",
         },
         {
           title: "Sauna Infrarroja",
           description:
             "Desintoxica a nivel celular y mejora la salud cardiovascular con calor de penetración profunda.",
+          imageUrl: "/images/infrared-sauna.jpg",
         },
         {
           title: "Cámara Hiperbárica",
           description:
             "Satura tu cuerpo con oxígeno puro para acelerar la reparación de tejidos y la función cognitiva.",
+          imageUrl: "/images/hyperbaric-chamber.jpg",
         },
         {
           title: "Terapia de Compresión",
           description:
             "Elimina toxinas y mejora el drenaje linfático con tecnología de presión de aire de precisión.",
+          imageUrl: "/images/compression-therapy.jpg",
         },
         {
           title: "Cápsula de Longevidad (4 tratamientos, 1 Pod)",
           description: "",
+          imageUrl: "/images/longevity-capsule.jpg",
           wide: true,
           bulletPoints: [
             {

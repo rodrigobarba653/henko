@@ -9,6 +9,7 @@ interface ServiceDetailProps {
     items: Array<{
       title: string;
       description: string;
+      imageUrl?: string;
       wide?: boolean;
       bulletPoints?: Array<{
         label: string;
@@ -60,76 +61,88 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Left Side - Long Card */}
             {leftItem && (
-              <div className="bg-main-green rounded-[2rem] p-8 text-main-beige h-full">
-                <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
-                  {leftItem.title}
-                </h3>
-                {leftItem.description ? (
-                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                    {leftItem.description}
-                  </p>
+              <div className="bg-main-green rounded-[2rem] overflow-hidden text-main-beige h-full flex flex-col">
+                {leftItem.imageUrl ? (
+                  <div className="relative w-full aspect-[4/3] flex-shrink-0 overflow-hidden">
+                    <img
+                      src={leftItem.imageUrl}
+                      alt=""
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
                 ) : null}
-
-                {/* Personalization Section */}
-                {leftItem.personalization && (
-                  <div className="mt-8 pt-8 border-t border-main-beige/20">
-                    <h4 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-3">
-                      {leftItem.personalization.heading}
-                    </h4>
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
+                    {leftItem.title}
+                  </h3>
+                  {leftItem.description ? (
                     <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                      {leftItem.personalization.description}
+                      {leftItem.description}
                     </p>
+                  ) : null}
 
-                    {/* Bullet Points with Iconify Icons */}
-                    <ul className="space-y-4">
-                      {leftItem.personalization.bulletPoints.map(
-                        (bullet, bulletIndex) => (
+                  {/* Personalization Section */}
+                  {leftItem.personalization && (
+                    <div className="mt-8 pt-8 border-t border-main-beige/20">
+                      <h4 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-3">
+                        {leftItem.personalization.heading}
+                      </h4>
+                      <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                        {leftItem.personalization.description}
+                      </p>
+
+                      {/* Bullet Points with Iconify Icons */}
+                      <ul className="space-y-4">
+                        {leftItem.personalization.bulletPoints.map(
+                          (bullet, bulletIndex) => (
+                            <li
+                              key={bulletIndex}
+                              className="flex items-center text-main-beige font-body"
+                            >
+                              <Icon
+                                icon={bullet.icon}
+                                className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
+                              />
+                              <span className="text-base md:text-lg">
+                                {bullet.label}
+                              </span>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Bullet Points with Icons */}
+                  {leftItem.bulletPoints &&
+                    leftItem.bulletPoints.length > 0 && (
+                      <ul className="space-y-3 mt-6">
+                        {leftItem.bulletPoints.map((bullet, bulletIndex) => (
                           <li
                             key={bulletIndex}
                             className="flex items-center text-main-beige font-body"
                           >
-                            <Icon
-                              icon={bullet.icon}
-                              className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
-                            />
+                            <svg
+                              className="w-5 h-5 text-main-beige mr-3 flex-shrink-0"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
                             <span className="text-base md:text-lg">
                               {bullet.label}
                             </span>
                           </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Bullet Points with Icons */}
-                {leftItem.bulletPoints && leftItem.bulletPoints.length > 0 && (
-                  <ul className="space-y-3 mt-6">
-                    {leftItem.bulletPoints.map((bullet, bulletIndex) => (
-                      <li
-                        key={bulletIndex}
-                        className="flex items-center text-main-beige font-body"
-                      >
-                        <svg
-                          className="w-5 h-5 text-main-beige mr-3 flex-shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-base md:text-lg">
-                          {bullet.label}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                        ))}
+                      </ul>
+                    )}
+                </div>
               </div>
             )}
 
@@ -138,8 +151,110 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
               {rightItems.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-main-green rounded-[2rem] p-8 text-main-beige flex-1"
+                  className="bg-main-green rounded-[2rem] overflow-hidden text-main-beige flex-1 flex flex-col"
                 >
+                  {item.imageUrl ? (
+                    <div className="relative w-full aspect-[4/3] flex-shrink-0 overflow-hidden">
+                      <img
+                        src={item.imageUrl}
+                        alt=""
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  ) : null}
+                  <div className="p-8 flex-1 flex flex-col">
+                    <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
+                      {item.title}
+                    </h3>
+                    {item.description ? (
+                      <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                        {item.description}
+                      </p>
+                    ) : null}
+
+                    {/* Personalization Section */}
+                    {item.personalization && (
+                      <div className="mt-8 pt-8 border-t border-main-beige/20">
+                        <h4 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-3">
+                          {item.personalization.heading}
+                        </h4>
+                        <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
+                          {item.personalization.description}
+                        </p>
+
+                        {/* Bullet Points with Iconify Icons */}
+                        <ul className="space-y-4">
+                          {item.personalization.bulletPoints.map(
+                            (bullet, bulletIndex) => (
+                              <li
+                                key={bulletIndex}
+                                className="flex items-center text-main-beige font-body"
+                              >
+                                <Icon
+                                  icon={bullet.icon}
+                                  className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
+                                />
+                                <span className="text-base md:text-lg">
+                                  {bullet.label}
+                                </span>
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Bullet Points with Icons */}
+                    {item.bulletPoints && item.bulletPoints.length > 0 && (
+                      <ul className="space-y-3 mt-6">
+                        {item.bulletPoints.map((bullet, bulletIndex) => (
+                          <li
+                            key={bulletIndex}
+                            className="flex items-center text-main-beige font-body"
+                          >
+                            <svg
+                              className="w-5 h-5 text-main-beige mr-3 flex-shrink-0"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span className="text-base md:text-lg">
+                              {bullet.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* Regular 3-column Grid for Other Services */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+            {service.items.map((item, index) => (
+              <div
+                key={index}
+                className={`bg-main-green rounded-[2rem] overflow-hidden text-main-beige flex flex-col ${item.wide ? "md:col-span-2 lg:col-span-2" : ""}`}
+              >
+                {item.imageUrl ? (
+                  <div className="relative w-full aspect-[4/3] flex-shrink-0 overflow-hidden max-h-[200px]">
+                    <img
+                      src={item.imageUrl}
+                      alt=""
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                ) : null}
+                <div className="p-8 flex-1 flex flex-col">
                   <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
                     {item.title}
                   </h3>
@@ -210,86 +325,6 @@ export default function ServiceDetail({ service, slug }: ServiceDetailProps) {
                     </ul>
                   )}
                 </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          /* Regular 3-column Grid for Other Services */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {service.items.map((item, index) => (
-              <div
-                key={index}
-                className={`bg-main-green rounded-[2rem] p-8 text-main-beige ${item.wide ? "md:col-span-2 lg:col-span-2" : ""}`}
-              >
-                <h3 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-4">
-                  {item.title}
-                </h3>
-                {item.description ? (
-                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                    {item.description}
-                  </p>
-                ) : null}
-
-                {/* Personalization Section */}
-                {item.personalization && (
-                  <div className="mt-8 pt-8 border-t border-main-beige/20">
-                    <h4 className="text-xl md:text-2xl font-semibold text-main-beige font-heading mb-3">
-                      {item.personalization.heading}
-                    </h4>
-                    <p className="text-base md:text-lg text-main-beige leading-relaxed font-body mb-6">
-                      {item.personalization.description}
-                    </p>
-
-                    {/* Bullet Points with Iconify Icons */}
-                    <ul className="space-y-4">
-                      {item.personalization.bulletPoints.map(
-                        (bullet, bulletIndex) => (
-                          <li
-                            key={bulletIndex}
-                            className="flex items-center text-main-beige font-body"
-                          >
-                            <Icon
-                              icon={bullet.icon}
-                              className="w-6 h-6 text-main-beige mr-4 flex-shrink-0"
-                            />
-                            <span className="text-base md:text-lg">
-                              {bullet.label}
-                            </span>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Bullet Points with Icons */}
-                {item.bulletPoints && item.bulletPoints.length > 0 && (
-                  <ul className="space-y-3 mt-6">
-                    {item.bulletPoints.map((bullet, bulletIndex) => (
-                      <li
-                        key={bulletIndex}
-                        className="flex items-center text-main-beige font-body"
-                      >
-                        <svg
-                          className="w-5 h-5 text-main-beige mr-3 flex-shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-base md:text-lg">
-                          {bullet.label}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </div>
             ))}
           </div>

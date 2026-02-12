@@ -139,13 +139,20 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right side - Logo */}
-          <div className="lg:flex lg:items-center lg:justify-end flex-shrink-0">
+          {/* Right side - Logo and Privacy */}
+          <div className="lg:flex lg:flex-col lg:items-end lg:justify-end flex-shrink-0 gap-6">
             <img
               src="/images/logo-beige.svg"
               alt={t.footer.logoAlt}
               className="h-24 md:h-24 lg:h-32 w-auto"
             />
+            <Link
+              href="/privacy-policy"
+              scroll={true}
+              className="text-main-beige/90 hover:text-main-beige text-sm font-body underline underline-offset-2 transition-colors"
+            >
+              {t.footer.privacyPolicy}
+            </Link>
           </div>
         </div>
       </div>
