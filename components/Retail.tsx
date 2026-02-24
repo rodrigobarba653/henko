@@ -19,7 +19,7 @@ export default function Retail() {
       body: t.retail.cards.shop.body,
       alt: t.retail.cards.shop.alt,
       icon: "/images/retail-1.svg",
-      imageUrl: "/images/elements.jpg",
+      imageUrl: "/images/elements.webp",
     },
     {
       heading: t.retail.cards.fuelBar.heading,

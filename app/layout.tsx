@@ -26,8 +26,15 @@ const montserrat = Montserrat({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"; // Update with your actual domain
 
 export const metadata: Metadata = {
-  title: translations.en.metadata.title,
+  title: {
+    default: translations.en.metadata.title,
+    template: "%s",
+  },
   description: translations.en.metadata.description,
+  keywords: translations.en.metadata.keywords,
+  authors: [{ name: "Henko", url: siteUrl }],
+  creator: "Henko",
+  themeColor: "#595438",
   icons: {
     icon: [
       { url: "/images/favicon.svg", type: "image/svg+xml" },
@@ -92,12 +99,19 @@ export default function RootLayout({
     url: siteUrl,
     logo: `${siteUrl}/images/logo.svg`,
     image: `${siteUrl}/images/hero.jpg`,
+    telephone: "+525535663796",
+    email: "hola@henkowellnessclub.com",
     address: {
       "@type": "PostalAddress",
-      // Add your actual address here when available
+      streetAddress: "Galileo 8 - Piso 2",
+      addressLocality: "Polanco",
+      addressRegion: "CDMX",
+      postalCode: "11550",
+      addressCountry: "MX",
     },
     sameAs: [
-      // Add your social media URLs here when available
+      "https://www.instagram.com/henkowellnessclub",
+      "https://www.tiktok.com/@henkowellnessclub",
     ],
     offers: {
       "@type": "Offer",

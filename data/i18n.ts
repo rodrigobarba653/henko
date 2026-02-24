@@ -26,6 +26,7 @@ export interface Translations {
   metadata: {
     title: string;
     description: string;
+    keywords: string;
   };
 
   // Homepage - Hero
@@ -175,6 +176,8 @@ export const translations: Record<Language, Translations> = {
       title: "Henko | The Art of Living Better, Longer",
       description:
         "Where ancient wisdom meets cutting-edge biohacking. Optimize your path to longevity with our wellness programs.",
+      keywords:
+        "Henko, wellness, longevity, biohacking, fitness, spa, Polanco, CDMX, recovery, yoga, pilates, hyperbaric, cold plunge, sauna, fuel bar, wellness club",
     },
     hero: {
       heading: "The Art of Living Better, Longer",
@@ -385,6 +388,8 @@ export const translations: Record<Language, Translations> = {
       title: "Henko | El Arte de Vivir Mejor, Por Más Tiempo",
       description:
         "Donde la sabiduría antigua se encuentra con el biohacking de vanguardia. Optimiza tu camino hacia la longevidad con nuestros programas de bienestar.",
+      keywords:
+        "Henko, bienestar, longevidad, biohacking, fitness, spa, Polanco, CDMX, recuperación, yoga, pilates, cámara hiperbárica, cold plunge, sauna, fuel bar, club de bienestar",
     },
     hero: {
       heading: "El Arte de Vivir Mejor, Por Más Tiempo",

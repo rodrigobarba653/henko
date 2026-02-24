@@ -3,11 +3,29 @@ import { translations } from "@/data/i18n";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
+const title = `${translations.en.metadata.title} | ${translations.en.footer.privacyPolicy}`;
+const description = "Henko Privacy Policy and Aviso de Privacidad. How we collect, use and protect your personal data.";
+
 export const metadata: Metadata = {
-  title: `${translations.en.metadata.title} | ${translations.en.footer.privacyPolicy}`,
-  description: "Henko Privacy Policy and Aviso de Privacidad. How we collect, use and protect your personal data.",
+  title,
+  description,
   alternates: {
-    canonical: `${siteUrl}/privacy-policy/`,
+    canonical: `${siteUrl}/privacy-policy`,
+  },
+  openGraph: {
+    title,
+    description,
+    url: `${siteUrl}/privacy-policy`,
+    siteName: "Henko",
+    images: [{ url: `${siteUrl}/images/hero.jpg`, width: 1200, height: 630, alt: translations.en.hero.imageAlt }],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [`${siteUrl}/images/hero.jpg`],
   },
 };
 
