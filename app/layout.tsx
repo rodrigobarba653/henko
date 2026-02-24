@@ -9,7 +9,7 @@ import ScrollSmootherSetup from "@/components/ScrollSmootherSetup";
 import { translations } from "@/data/i18n";
 
 const editorsNote = localFont({
-  src: "../public/fonts/EditorNotesFont/WOFF2/Editor'sNote-Regular.woff2",
+  src: "../public/fonts/editorNotesFont/WOFF2/Editor'sNote-Regular.woff2",
   variable: "--font-editors-note",
   display: "swap",
 });
