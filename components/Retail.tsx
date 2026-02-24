@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -18,7 +19,7 @@ export default function Retail() {
       body: t.retail.cards.shop.body,
       alt: t.retail.cards.shop.alt,
       icon: "/images/retail-1.svg",
-      imageUrl: "/images/concept.jpg",
+      imageUrl: "/images/elements.jpg",
     },
     {
       heading: t.retail.cards.fuelBar.heading,
@@ -70,10 +71,13 @@ export default function Retail() {
               {/* Card image (e.g. fuel) */}
               {card.imageUrl ? (
                 <div className="relative w-full aspect-[16/9] flex-shrink-0 overflow-hidden">
-                  <img
+                  <Image
                     src={card.imageUrl}
-                    alt=""
-                    className="object-cover w-full h-full"
+                    alt={card.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    loading="lazy"
                   />
                 </div>
               ) : null}
