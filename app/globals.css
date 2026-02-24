@@ -18,7 +18,8 @@
   }
 }
 
-html, body {
+html,
+body {
   width: 100vw;
   overflow-x: hidden;
 }
@@ -34,7 +35,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-gowun-batang), serif;
+  font-family: var(--font-editors-note), serif;
+  letter-spacing: 0.04em;
+}
+
+/* Slightly separate characters for heading font when used via utility class */
+.font-heading {
+  letter-spacing: 0.04em;
 }
 
 @layer utilities {

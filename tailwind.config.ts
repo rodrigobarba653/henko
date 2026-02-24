@@ -17,7 +17,7 @@ const config: Config = {
         "oxide": "#804A2E",
       },
       fontFamily: {
-        heading: ["var(--font-gowun-batang)", "serif"],
+        heading: ["var(--font-editors-note)", "serif"],
         body: ["var(--font-montserrat)", "sans-serif"],
       },
     },

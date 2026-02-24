@@ -18,7 +18,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    "px-12 py-2 rounded-full transition-colors font-medium shadow-md font-body";
+    "px-12 py-2 rounded-full transition-colors font-medium shadow-md font-body text-center";
 
   const variantClasses = {
     primary: "bg-main-green text-main-beige hover:bg-oxide",
@@ -31,14 +31,21 @@ export default function Button({
 
   if (href) {
     return (
-      <a href={href} className={combinedClasses} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a
+        href={href}
+        className={combinedClasses}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <button className={combinedClasses} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button
+      className={combinedClasses}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

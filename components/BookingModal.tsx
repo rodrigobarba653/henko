@@ -25,19 +25,19 @@ export default function BookingModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-white"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-bg-beige"
       onClick={closeModal}
     >
 
       {/* Modal Content */}
       <div
-        className="w-full h-full flex flex-col bg-white"
+        className="w-full h-full flex flex-col bg-bg-beige"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Logo */}
-        <div className="flex justify-between items-center md:py-4 py-0 px-4 bg-white border-b border-gray-200">
+        <div className="flex justify-between items-center md:py-4 py-0 px-4 bg-bg-beige border-b border-main-green/20">
           <img
-            src="/images/logo.svg"
+            src="/images/h-logo.svg"
             alt="Logo"
             className="h-8 md:h-12 w-auto"
           />
@@ -64,7 +64,7 @@ export default function BookingModal() {
         </div>
 
         {/* Iframe Container */}
-        <div className="flex-1 w-full overflow-hidden bg-white">
+        <div className="flex-1 w-full overflow-hidden bg-bg-beige">
           <iframe
             src="https://app.glofox.com/portal/#/branch/694429272459803e3e0d5054/classes-day-view"
             frameBorder="0"
@@ -76,12 +76,12 @@ export default function BookingModal() {
         </div>
 
         {/* Footer with Glofox attribution */}
-        <div className="bg-white border-t border-gray-200 py-3 px-4 text-center">
+        <div className="bg-bg-beige border-t border-main-green/20 py-3 px-4 text-center">
           <a
             href="https://www.glofox.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-gray-600 hover:text-main-green transition-colors"
+            className="text-sm text-[#1a1a1a]/70 hover:text-main-green transition-colors"
           >
             powered by <b>Glofox</b>
           </a>

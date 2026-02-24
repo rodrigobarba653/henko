@@ -4,30 +4,30 @@ import Footer from "@/components/Footer";
 import ServiceHero from "@/components/ServiceHero";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const GLOFOX_MEMBERSHIPS_IFRAME_SRC =
-  "https://app.glofox.com/portal/#/branch/694429272459803e3e0d5054/memberships?header=memberships";
+const GLOFOX_IFRAME_SRC =
+  "https://app.glofox.com/portal/#/branch/694429272459803e3e0d5054/classes-day-view";
 
-const PACKAGES_HERO_IMAGE = "/images/hero.jpg";
+const BOOKING_HERO_IMAGE = "/images/hero.jpg";
 
-export default function PackagesPage() {
+export default function BookingPage() {
   const { t } = useLanguage();
   return (
     <>
       <main className="bg-bg-beige min-h-screen flex flex-col">
         <ServiceHero
-          heading={t.common.membershipsHeroHeading}
-          subheading={t.common.membershipsHeroSubheading}
-          imageUrl={PACKAGES_HERO_IMAGE}
+          heading={t.common.bookingHeroHeading}
+          subheading={t.common.bookingHeroSubheading}
+          imageUrl={BOOKING_HERO_IMAGE}
         />
         <div className="flex-1 flex flex-col max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="w-full h-[5000px] sm:h-[3400px] rounded-2xl border border-main-green/20 bg-white overflow-hidden">
+          <div className="w-full h-[1600px] rounded-2xl border border-main-green/20 bg-white overflow-hidden">
             <iframe
-              src={GLOFOX_MEMBERSHIPS_IFRAME_SRC}
+              src={GLOFOX_IFRAME_SRC}
               frameBorder={0}
               width="100%"
               height="100%"
               className="w-full h-full border-0 block"
-              title="Packages"
+              title="Booking System"
             />
           </div>
           <div className="mt-6 text-center pb-8">

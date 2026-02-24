@@ -3,7 +3,6 @@
 import { useRef, useEffect } from "react";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useBookingModal } from "@/contexts/BookingModalContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 interface HomeHeroProps {
@@ -18,7 +17,6 @@ export default function HomeHero({
   showButtons = true,
 }: HomeHeroProps = {}) {
   const { t } = useLanguage();
-  const { openModal } = useBookingModal();
   const heroHeading = heading || t.hero.heading;
   const heroSubheading = subheading || t.hero.subheading;
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -104,7 +102,7 @@ export default function HomeHero({
             </p>
             {showButtons && (
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-                <Button variant="primary" onClick={openModal}>
+                <Button variant="primary" href="/booking">
                   {t.hero.buttonPrimary}
                 </Button>
                 <Button

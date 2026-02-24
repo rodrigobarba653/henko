@@ -7,11 +7,9 @@ import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import Button from "./ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useBookingModal } from "@/contexts/BookingModalContext";
 
 export default function Nav() {
   const { t, language, setLanguage } = useLanguage();
-  const { openModal } = useBookingModal();
   const pathname = usePathname();
   const router = useRouter();
   const [isAtTop, setIsAtTop] = useState(true);
@@ -220,7 +218,7 @@ export default function Nav() {
                   : t.navSection.languageEnglish}
               </button>
               {/* Booking Button */}
-              <Button variant="primary" onClick={openModal}>
+              <Button variant="primary" href="/booking">
                 {t.common.nav.booking}
               </Button>
             </div>
@@ -310,16 +308,11 @@ export default function Nav() {
 
           {/* Booking Button */}
           <div className="mt-8">
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setIsMenuOpen(false);
-                openModal();
-              }}
-              className="px-8 py-4 text-xl"
-            >
-              {t.common.nav.booking}
-            </Button>
+            <Link href="/booking" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="secondary" className="px-8 py-4 text-xl">
+                {t.common.nav.booking}
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

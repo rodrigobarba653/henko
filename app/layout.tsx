@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import { Gowun_Batang, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { BookingModalProvider } from "@/contexts/BookingModalContext";
-import BookingModal from "@/components/BookingModal";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollSmootherSetup from "@/components/ScrollSmootherSetup";
 import { translations } from "@/data/i18n";
 
-const gowunBatang = Gowun_Batang({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-gowun-batang",
+const editorsNote = localFont({
+  src: "../public/fonts/EditorNotesFont/WOFF2/Editor'sNote-Regular.woff2",
+  variable: "--font-editors-note",
   display: "swap",
 });
 
@@ -106,27 +105,43 @@ export default function RootLayout({
     },
   };
 
+  const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-52MCSD82');`;
+
   return (
-    <html lang="en" className={`${gowunBatang.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${editorsNote.variable} ${montserrat.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: gtmScript }} />
+      </head>
       <body className={`${montserrat.className} bg-bg-beige`}>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-52MCSD82"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <LanguageProvider>
-          <BookingModalProvider>
-            {/* Fixed elements outside smooth-wrapper */}
-            <Nav />
-            <BookingModal />
-            
-            {/* ScrollSmoother wrapper and content */}
-            <div id="smooth-wrapper">
-              <div id="smooth-content">
-                <ScrollSmootherSetup />
-                {children}
-              </div>
+          {/* Fixed elements outside smooth-wrapper */}
+          <Nav />
+          <WhatsAppButton />
+          
+          {/* ScrollSmoother wrapper and content */}
+          <div id="smooth-wrapper">
+            <div id="smooth-content">
+              <ScrollSmootherSetup />
+              {children}
             </div>
-          </BookingModalProvider>
+          </div>
         </LanguageProvider>
       </body>
     </html>

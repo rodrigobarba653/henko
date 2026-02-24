@@ -15,6 +15,11 @@ export interface Translations {
       bookNow: string;
       includedServices: string;
     };
+    bookingPageHeading: string;
+    bookingHeroHeading: string;
+    bookingHeroSubheading: string;
+    membershipsHeroHeading: string;
+    membershipsHeroSubheading: string;
   };
 
   // Metadata
@@ -160,6 +165,11 @@ export const translations: Record<Language, Translations> = {
         bookNow: "Book Now",
         includedServices: "Included Services",
       },
+      bookingPageHeading: "Book a class",
+      bookingHeroHeading: "Book a class",
+      bookingHeroSubheading: "Reserve your spot and join the experience.",
+      membershipsHeroHeading: "Packages",
+      membershipsHeroSubheading: "Find the plan that fits your journey.",
     },
     metadata: {
       title: "Henko | The Art of Living Better, Longer",
@@ -170,7 +180,7 @@ export const translations: Record<Language, Translations> = {
       heading: "The Art of Living Better, Longer",
       subheading: "Where ancient wisdom meets cutting-edge biohacking.",
       buttonPrimary: "Book Now",
-      buttonSecondary: "Text Us",
+      buttonSecondary: "Whatsapp",
       imageAlt: "Zen yoga and wellness",
     },
     aboutUs: {
@@ -365,6 +375,11 @@ export const translations: Record<Language, Translations> = {
         bookNow: "Reservar Ahora",
         includedServices: "Servicios Incluidos",
       },
+      bookingPageHeading: "Reservar clase",
+      bookingHeroHeading: "Reservar clase",
+      bookingHeroSubheading: "Reserva tu lugar y vive la experiencia.",
+      membershipsHeroHeading: "Paquetes",
+      membershipsHeroSubheading: "Encuentra el plan que se adapte a tu camino.",
     },
     metadata: {
       title: "Henko | El Arte de Vivir Mejor, Por Más Tiempo",
@@ -376,7 +391,7 @@ export const translations: Record<Language, Translations> = {
       subheading:
         "Donde la sabiduría antigua se encuentra con el biohacking de vanguardia.",
       buttonPrimary: "Reservar Ahora",
-      buttonSecondary: "Escíbenos",
+      buttonSecondary: "Whastapp",
       imageAlt: "Yoga zen y bienestar",
     },
     aboutUs: {

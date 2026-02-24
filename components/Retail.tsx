@@ -18,6 +18,7 @@ export default function Retail() {
       body: t.retail.cards.shop.body,
       alt: t.retail.cards.shop.alt,
       icon: "/images/retail-1.svg",
+      imageUrl: "/images/concept.jpg",
     },
     {
       heading: t.retail.cards.fuelBar.heading,
@@ -25,6 +26,7 @@ export default function Retail() {
       body: t.retail.cards.fuelBar.body,
       alt: t.retail.cards.fuelBar.alt,
       icon: "/images/retail-2.svg",
+      imageUrl: "/images/fuel.jpg",
     },
   ];
 
@@ -63,8 +65,19 @@ export default function Retail() {
               ref={(el) => {
                 cardRefs.current[index] = el;
               }}
-              className="bg-main-green rounded-[2rem] p-8 md:p-10 flex flex-col"
+              className="bg-main-green rounded-[2rem] overflow-hidden flex flex-col"
             >
+              {/* Card image (e.g. fuel) */}
+              {card.imageUrl ? (
+                <div className="relative w-full aspect-[16/9] flex-shrink-0 overflow-hidden">
+                  <img
+                    src={card.imageUrl}
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              ) : null}
+              <div className="p-8 md:p-10 flex flex-col flex-1">
               {/* Icon Circle - Aligned Left */}
               <div 
                 ref={(el) => {
@@ -95,6 +108,7 @@ export default function Retail() {
                 <p className="text-base md:text-lg text-main-beige leading-relaxed font-body">
                   {card.body}
                 </p>
+              </div>
               </div>
             </div>
           ))}

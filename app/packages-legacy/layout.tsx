@@ -4,14 +4,14 @@ import { translations } from "@/data/i18n";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
 export const metadata: Metadata = {
-  title: `${translations.en.metadata.title} | Packages`,
-  description: "Explore Henko memberships and find the plan that fits your journey.",
+  title: `${translations.en.metadata.title} | ${translations.en.packages.heading}`,
+  description: translations.en.packages.body,
   alternates: {
-    canonical: `${siteUrl}/packages/`,
+    canonical: `${siteUrl}/packages-legacy/`,
   },
 };
 
-export default function PackagesLayout({
+export default function PackagesLegacyLayout({
   children,
 }: {
   children: React.ReactNode;
