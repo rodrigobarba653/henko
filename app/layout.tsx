@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
@@ -6,6 +6,7 @@ import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollSmootherSetup from "@/components/ScrollSmootherSetup";
+import ScrollToTopOnNavigate from "@/components/ScrollToTopOnNavigate";
 import { translations } from "@/data/i18n";
 
 const editorsNote = localFont({
@@ -34,7 +35,6 @@ export const metadata: Metadata = {
   keywords: translations.en.metadata.keywords,
   authors: [{ name: "Henko", url: siteUrl }],
   creator: "Henko",
-  themeColor: "#595438",
   icons: {
     icon: [
       { url: "/images/favicon.svg", type: "image/svg+xml" },
@@ -81,6 +81,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#595438",
 };
 
 export default function RootLayout({
@@ -153,6 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div id="smooth-wrapper">
             <div id="smooth-content">
               <ScrollSmootherSetup />
+              <ScrollToTopOnNavigate />
               {children}
             </div>
           </div>

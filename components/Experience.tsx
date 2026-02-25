@@ -163,8 +163,8 @@ export default function Experience() {
                 {/* Arrow Circle Button */}
                 <Link
                   href={image.href || "#"}
+                  scroll={false}
                   onClick={(e) => {
-                    // Stop propagation so parent link doesn't fire
                     e.stopPropagation();
                   }}
                   className={`absolute ${
