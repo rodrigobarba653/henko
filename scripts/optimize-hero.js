@@ -8,7 +8,7 @@ const fs = require("fs");
 
 const PUBLIC_IMAGES = path.join(__dirname, "..", "public", "images");
 const INPUT = path.join(PUBLIC_IMAGES, "hero.jpg");
-const OUT_WEBP = path.join(PUBLIC_IMAGES, "hero.webp");
+const OUT_WEBP = path.join(PUBLIC_IMAGES, "hero.jpg");
 const MAX_WIDTH = 1920;
 const WEBP_QUALITY = 82;
 
@@ -24,7 +24,7 @@ async function run() {
     .webp({ quality: WEBP_QUALITY })
     .toFile(OUT_WEBP);
 
-  console.log("Created hero.webp (web-friendly)");
+  console.log("Created hero.jpg (web-friendly)");
 }
 
 run().catch((err) => {
