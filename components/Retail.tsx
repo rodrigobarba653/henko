@@ -19,7 +19,7 @@ export default function Retail() {
       body: t.retail.cards.shop.body,
       alt: t.retail.cards.shop.alt,
       icon: "/images/retail-1.svg",
-      imageUrl: "/images/elements.webp",
+      imageUrl: "/images/elements.jpg",
     },
     {
       heading: t.retail.cards.fuelBar.heading,
@@ -39,18 +39,37 @@ export default function Retail() {
       { ref: headingRef, preset: "fadeUp", duration: 0.8 },
       { ref: bodyRef, preset: "fadeUp", duration: 0.8 },
       // stagger: 0 => animate at the same time
-      { ref: cardRefs, preset: "fadeScaleUp", stagger: 0.2, duration: 0.8, customFrom: { y: 40 } },
+      {
+        ref: cardRefs,
+        preset: "fadeScaleUp",
+        stagger: 0.2,
+        duration: 0.8,
+        customFrom: { y: 40 },
+      },
       // Start icons at the same time as the cards (position "<"), also no stagger.
-      { ref: iconRefs, preset: "rotateScale", stagger: 0, duration: 0.8, position: "<" },
+      {
+        ref: iconRefs,
+        preset: "rotateScale",
+        stagger: 0,
+        duration: 0.8,
+        position: "<",
+      },
     ],
   });
 
   return (
-    <section ref={sectionRef} id="fuel-shop" className="py-8 lg:py-12 bg-bg-beige">
+    <section
+      ref={sectionRef}
+      id="fuel-shop"
+      className="py-8 lg:py-12 bg-bg-beige"
+    >
       <div className="max-w-7xl mx-auto px-4">
         {/* Heading and Body */}
         <div className="md:max-w-[50%] mx-auto md:text-center mb-12">
-          <h2 ref={headingRef} className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4">
+          <h2
+            ref={headingRef}
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1a1a1a] font-heading mb-4"
+          >
             {t.retail.heading}
           </h2>
           <p ref={bodyRef} className="text-lg text-[#1a1a1a] leading-relaxed">
@@ -82,37 +101,37 @@ export default function Retail() {
                 </div>
               ) : null}
               <div className="p-8 md:p-10 flex flex-col flex-1">
-              {/* Icon Circle - Aligned Left */}
-              <div 
-                ref={(el) => {
-                  iconRefs.current[index] = el;
-                }}
-                className="w-20 h-20 bg-main-beige rounded-full flex items-center justify-center mb-6 self-start"
-              >
-                <img
-                  src={card.icon}
-                  alt={card.alt}
-                  className="w-11 h-11 md:w-12 md:h-12 object-contain"
-                />
-              </div>
+                {/* Icon Circle - Aligned Left */}
+                <div
+                  ref={(el) => {
+                    iconRefs.current[index] = el;
+                  }}
+                  className="w-20 h-20 bg-main-beige rounded-full flex items-center justify-center mb-6 self-start"
+                >
+                  <img
+                    src={card.icon}
+                    alt={card.alt}
+                    className="w-11 h-11 md:w-12 md:h-12 object-contain"
+                  />
+                </div>
 
-              {/* Content - Aligned Left */}
-              <div className="w-full text-left">
-                {/* Heading */}
-                <h3 className="text-2xl md:text-3xl font-semibold text-main-beige font-heading mb-3">
-                  {card.heading}
-                </h3>
+                {/* Content - Aligned Left */}
+                <div className="w-full text-left">
+                  {/* Heading */}
+                  <h3 className="text-2xl md:text-3xl font-semibold text-main-beige font-heading mb-3">
+                    {card.heading}
+                  </h3>
 
-                {/* Subheading */}
-                <p className="text-sm md:text-base font-medium text-main-beige uppercase mb-4 font-body tracking-wider">
-                  {card.subheading}
-                </p>
+                  {/* Subheading */}
+                  <p className="text-sm md:text-base font-medium text-main-beige uppercase mb-4 font-body tracking-wider">
+                    {card.subheading}
+                  </p>
 
-                {/* Body */}
-                <p className="text-base md:text-lg text-main-beige leading-relaxed font-body">
-                  {card.body}
-                </p>
-              </div>
+                  {/* Body */}
+                  <p className="text-base md:text-lg text-main-beige leading-relaxed font-body">
+                    {card.body}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

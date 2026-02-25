@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const GLOFOX_IFRAME_SRC =
   "https://app.glofox.com/portal/#/branch/694429272459803e3e0d5054/classes-day-view";
 
-const BOOKING_HERO_IMAGE = "/images/hero.webp";
+const BOOKING_HERO_IMAGE = "/images/hero.jpg";
 
 export default function BookingPage() {
   const { t } = useLanguage();

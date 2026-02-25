@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const GLOFOX_MEMBERSHIPS_IFRAME_SRC =
   "https://app.glofox.com/portal/#/branch/694429272459803e3e0d5054/memberships?header=memberships";
 
-const PACKAGES_HERO_IMAGE = "/images/hero.webp";
+const PACKAGES_HERO_IMAGE = "/images/hero.jpg";
 
 export default function PackagesPage() {
   const { t } = useLanguage();

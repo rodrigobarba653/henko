@@ -9,7 +9,7 @@ const fs = require("fs");
 
 const PUBLIC_IMAGES = path.join(__dirname, "..", "public", "images");
 const INPUT = path.join(PUBLIC_IMAGES, "elements.jpg");
-const OUT_WEBP = path.join(PUBLIC_IMAGES, "elements.webp");
+const OUT_WEBP = path.join(PUBLIC_IMAGES, "elements.jpg");
 const MAX_WIDTH = 1200; // enough for 2x on ~600px card
 const WEBP_QUALITY = 82;
 
@@ -28,7 +28,7 @@ async function run() {
     .webp({ quality: WEBP_QUALITY })
     .toFile(OUT_WEBP);
 
-  console.log("Created elements.webp (web-friendly)");
+  console.log("Created elements.jpg (web-friendly)");
 }
 
 run().catch((err) => {
