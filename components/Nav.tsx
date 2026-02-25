@@ -170,7 +170,11 @@ export default function Nav() {
           isAtTop ? "md:border-b-0" : "md:border-b"
         }`}
       >
-        <div className="max-w-8xl mx-auto lg:px-16 px-4 lg:py-0">
+        <div
+          className={`max-w-8xl mx-auto lg:px-16 px-4 ${
+            isAtTop ? "pb-2" : "pb-0"
+          }`}
+        >
           <div className="flex items-center justify-between">
             {/* Logo and Nav Items */}
             <div className="flex items-center lg:space-x-12 space-x-8">
