@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "optimize:elements": "node scripts/optimize-elements.js"
+    "optimize:elements": "node scripts/optimize-elements.js",
+    "optimize:hero": "node scripts/optimize-hero.js"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
