@@ -96,7 +96,7 @@ export default function HomeHero({
     <section ref={heroSectionRef} className="relative w-full">
       <div
         ref={imageWrapperRef}
-        className="relative w-full aspect-[3/2] md:aspect-[20/9] overflow-hidden"
+        className="relative w-full aspect-[3/2] md:aspect-[20/9] overflow-hidden min-h-[600px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >

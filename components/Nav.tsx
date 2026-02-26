@@ -182,7 +182,7 @@ export default function Nav() {
                 <Link
                   href="/"
                   onClick={handleLinkClick}
-                  className="flex items-center h-20"
+                  className="flex items-center"
                 >
                   <img
                     src="/images/h-logo.svg"
@@ -193,7 +193,7 @@ export default function Nav() {
                   />
                 </Link>
               </div>
-              <div className="hidden md:flex items-center space-x-8">
+              <div className="hidden xl:flex items-center space-x-8">
                 {navItems.map((item) => (
                   <a
                     key={item.label}
@@ -208,7 +208,7 @@ export default function Nav() {
             </div>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
+            <div className="hidden xl:flex items-center space-x-4 flex-shrink-0">
               {/* Language Toggle */}
               <button
                 onClick={() => setLanguage(language === "en" ? "es" : "en")}
@@ -230,7 +230,7 @@ export default function Nav() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
+              className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
               aria-label={t.navSection.menuToggle}
             >
               <span
@@ -256,7 +256,7 @@ export default function Nav() {
       {/* Mobile Menu Panel - Full Screen */}
       <div
         ref={menuRef}
-        className="fixed top-0 right-0 h-full w-full bg-oxide z-50 md:hidden"
+        className="fixed top-0 right-0 h-full w-full bg-oxide z-50 xl:hidden"
         style={{ transform: "translateX(100%)" }}
       >
         <div className="flex flex-col items-center justify-center h-full px-6 relative">
