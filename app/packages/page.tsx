@@ -18,6 +18,7 @@ export default function PackagesPage() {
           heading={t.common.membershipsHeroHeading}
           subheading={t.common.membershipsHeroSubheading}
           imageUrl={PACKAGES_HERO_IMAGE}
+          imageUrlMobile="/images/hero-mobile.jpg"
         />
         <div className="flex-1 flex flex-col max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="w-full h-[5000px] sm:h-[3400px] rounded-2xl border border-main-green/20 bg-white overflow-hidden">

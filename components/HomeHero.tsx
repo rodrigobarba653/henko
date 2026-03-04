@@ -110,13 +110,28 @@ export default function HomeHero({
               key={slide.src + index}
               className="relative w-full flex-shrink-0 h-full"
             >
-              <img
-                src={slide.src}
-                alt={index === 0 ? t.hero.imageAlt : slide.alt}
-                className="w-full h-full object-cover"
-                loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : undefined}
-              />
+              {index === 0 ? (
+                <picture>
+                  <source
+                    media="(max-width: 767px)"
+                    srcSet="/images/hero-mobile.jpg"
+                  />
+                  <img
+                    src={slide.src}
+                    alt={t.hero.imageAlt}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                </picture>
+              ) : (
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              )}
             </div>
           ))}
         </div>
