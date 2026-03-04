@@ -192,7 +192,7 @@ export const translations: Record<Language, Translations> = {
     },
     experience: {
       heading: "The Henko Experience",
-      body: "A holistic approach to human optimization—where recovery, movement, and beauty work together to elevate performance, balance, and longevity.",
+      body: "A holistic approach to human optimization where recovery, movement, and beauty work together to elevate performance, balance, and longevity.",
       viewMore: "View more",
       cards: {
         biohacking: {
